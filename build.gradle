@@ -1,0 +1,62 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath group: 'com.scuilion.gradle', name: 'utils', version: '0.+'
+    }
+}
+
+apply plugin: 'maven-publish'
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies{
+    compile 'com.programmaticallyspeaking.aptdemo:apt-demo:1.0-SNAPSHOT'
+    testCompile 'junit:junit:4.11'
+}
+
+//Add integraion test
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+
+    integrationTestCompile.extendsFrom compile
+    integrationTestRuntime.extendsFrom runtime
+}
+
+sourceSets {
+    integrationTest {
+        java {
+            srcDir 'src/integrationTest/java'
+        }
+        resources {
+            srcDir 'src/integrationTest/resources'
+        }
+        compileClasspath = sourceSets.main.output + configurations.testRuntime
+        runtimeClasspath = output + sourceSets.main.output + configurations.testRuntime
+    }
+}
+
+task integrationTest(type:Test){
+    dependsOn publishToMavenLocal
+    dependsOn integrationTestClasses
+
+    systemProperties['integrationTest.location'] = new File(sourceSets.integrationTest.output.resourcesDir, 'projectRoot').absolutePath
+    systemProperties['version'] = version
+
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath + sourceSets.main.output 
+
+    getReports().getHtml().setDestination(new File("$project.reporting.baseDir", 'integrationTest'))
+    getReports().getJunitXml().setDestination(new File("$project.buildDir", 'integration-results')) 
+}
+integrationTest.mustRunAfter test
+
+apply plugin: 'utils'
+
