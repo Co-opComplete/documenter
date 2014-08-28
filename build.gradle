@@ -16,9 +16,16 @@ repositories {
     mavenLocal()
 }
 
-dependencies{
-    compile 'com.programmaticallyspeaking.aptdemo:apt-demo:1.0-SNAPSHOT'
-    testCompile 'junit:junit:4.11'
+
+group = 'com.scuilion.documenter'
+version = '0.1'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
 
 configurations {
@@ -29,6 +36,11 @@ configurations {
     integrationTestRuntime.extendsFrom runtime
 }
 
+dependencies{
+    compile 'com.programmaticallyspeaking.aptdemo:apt-demo:1.0-SNAPSHOT'
+    testCompile 'junit:junit:4.11'
+    integrationTestRuntime files("${System.properties['java.home']}/../lib/tools.jar") 
+}
 sourceSets {
     integrationTest {
         java {
@@ -55,8 +67,6 @@ task integrationTest(type:Test){
     getReports().getHtml().setDestination(new File("$project.reporting.baseDir", 'integrationTest'))
     getReports().getJunitXml().setDestination(new File("$project.buildDir", 'integration-results')) 
 }
-
-integrationTest.mustRunAfter test
 
 apply plugin: 'utils'
 
