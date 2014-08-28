@@ -21,7 +21,6 @@ dependencies{
     testCompile 'junit:junit:4.11'
 }
 
-//Add integraion test
 configurations {
     integrationTestCompile.extendsFrom testCompile
     integrationTestRuntime.extendsFrom testRuntime
@@ -51,11 +50,12 @@ task integrationTest(type:Test){
     systemProperties['version'] = version
 
     testClassesDir = sourceSets.integrationTest.output.classesDir
-    classpath = sourceSets.integrationTest.runtimeClasspath + sourceSets.main.output 
+    classpath = sourceSets.integrationTest.runtimeClasspath + sourceSets.main.output + configurations.integrationTestCompile + sourceSets.test.output
 
     getReports().getHtml().setDestination(new File("$project.reporting.baseDir", 'integrationTest'))
     getReports().getJunitXml().setDestination(new File("$project.buildDir", 'integration-results')) 
 }
+
 integrationTest.mustRunAfter test
 
 apply plugin: 'utils'

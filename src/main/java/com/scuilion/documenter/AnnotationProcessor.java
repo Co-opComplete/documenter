@@ -1,3 +1,5 @@
+package com.scuilion.documenter;
+
 import javax.annotation.processing.*;
 import javax.lang.model.element.*;
 import javax.tools.*;

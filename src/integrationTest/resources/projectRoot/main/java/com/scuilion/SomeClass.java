@@ -1,19 +1,20 @@
 package com.scuilion.exampleproject;
 
-import com.scuilion.documenter.Documenter;
+import com.scuilion.documenter.Document;
 
-@Document("SOME_CLASS")
+@Document()
 class SomeClass{
     
-    @Document("SOME_CONSTRUCTOR")
+    @Document()
     public void SomeClass(){
     }
 
-    @Document("SOME_METHOD") 
+    @Document() 
     public String someMethod(){
-        @Document("FOO") 
+        @Document() 
         String foo = "foo";
-        @Document("BAR") 
+        @Document() 
         Integer bar = 2;
+        return "sup";
     }
 }
