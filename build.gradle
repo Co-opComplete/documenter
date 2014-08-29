@@ -10,6 +10,7 @@ buildscript {
 
 apply plugin: 'maven-publish'
 apply plugin: 'java'
+apply plugin: 'eclipse'
 
 repositories {
     mavenCentral()
@@ -38,7 +39,9 @@ configurations {
 
 dependencies{
     //compile 'com.programmaticallyspeaking.aptdemo:apt-demo:1.0-SNAPSHOT'
+    compile 'commons-io:commons-io:2.4'
     testCompile 'junit:junit:4.11'
+
     integrationTestRuntime files("${System.properties['java.home']}/../lib/tools.jar") 
 }
 sourceSets {
