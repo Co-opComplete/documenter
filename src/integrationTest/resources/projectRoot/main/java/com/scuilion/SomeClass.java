@@ -9,12 +9,24 @@ class SomeClass{
     public void SomeClass(){
     }
 
+    @Document 
+    String really = "foo";
+    
     @Document() 
-    public String someMethod(){
-        @Document() 
-        String foo = "foo";
-        @Document() 
+    public Integer someMethod(){
+
+        @Document 
+        Integer foo = 3;
+
+        @Document 
         Integer bar = 2;
-        return "sup";
+
+        return foo + bar;
     }
+
+    @Document() 
+    public Integer anotherMethod(){
+        return 5;
+    }
+
 }

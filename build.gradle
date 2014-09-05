@@ -17,7 +17,6 @@ repositories {
     mavenLocal()
 }
 
-
 group = 'com.scuilion.documenter'
 version = '0.1'
 
@@ -44,6 +43,7 @@ dependencies{
 
     integrationTestRuntime files("${System.properties['java.home']}/../lib/tools.jar") 
 }
+
 sourceSets {
     integrationTest {
         java {
