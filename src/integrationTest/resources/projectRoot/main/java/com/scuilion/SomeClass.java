@@ -12,7 +12,7 @@ class SomeClass{
     @Document 
     String really = "foo";
     
-    @Document() 
+    @Document(priority=100) 
     public Integer someMethod(){
 
         @Document 
