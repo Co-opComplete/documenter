@@ -22,9 +22,9 @@ public class AnnotationProcessor extends AbstractProcessor {
 
         Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(Document.class);
         for (Element te : elements) {
-            for(AnnotationMirror am : te.getAnnotationMirrors()){
+            for(AnnotationMirror annotationMirror : te.getAnnotationMirrors()){
                 System.out.println("--------");
-                for (Map.Entry<? extends ExecutableElement,? extends AnnotationValue> entry : am.getElementValues().entrySet()) {
+                for (Map.Entry<? extends ExecutableElement,? extends AnnotationValue> entry : annotationMirror.getElementValues().entrySet()) {
                     ExecutableElement key = entry.getKey();
                     AnnotationValue value = entry.getValue();
                     System.out.println(key);
