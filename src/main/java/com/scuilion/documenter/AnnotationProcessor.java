@@ -18,8 +18,9 @@ public class AnnotationProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
+        List<String> sup = new ArrayList<>();
         Scanner scanner = new Scanner();
-        scanner.scan(roundEnv.getRootElements(), null);
+        sup = scanner.scan(roundEnv.getRootElements(), null);
 //         
 //         SdmMap sdmMap = jointScanner.getSdmMap();
 //         for (Map.Entry<String, SDMType> entry : sdmMap.getSdmMap().entrySet()) {

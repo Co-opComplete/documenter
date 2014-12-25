@@ -13,7 +13,13 @@ ElementType.FIELD,
 ElementType.METHOD,
 ElementType.PACKAGE,
 ElementType.PARAMETER,
-ElementType.TYPE})
+ElementType.TYPE,
+ElementType.LOCAL_VARIABLE,
+ElementType.TYPE_PARAMETER,
+ElementType.TYPE_USE })
 public @interface Document{
     int priority();
 }
+
+
+

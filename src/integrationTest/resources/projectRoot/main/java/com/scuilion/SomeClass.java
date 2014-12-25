@@ -4,7 +4,13 @@ import com.scuilion.documenter.Document;
 
 @Document(priority=100)
 class SomeClass{
-    
+
+    {
+        @Document(priority=600)
+        String cha = "";
+        System.out.println( );
+    }
+
     @Document(priority=200)
     public void SomeClass(){
     }
@@ -15,10 +21,10 @@ class SomeClass{
     @Document(priority=400) 
     public Integer someMethod(){
 
-        //@Document(priority=-1)
+        @Document(priority=-1)
         Integer foo = 3;
 
-        //@Document(priority=-1)
+        @Document(priority=-1)
         Integer bar = 2;
 
         return foo + bar;
