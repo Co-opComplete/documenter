@@ -61,7 +61,6 @@ task integrationTest(type:Test){
     dependsOn publishToMavenLocal
     dependsOn integrationTestClasses
 
-    systemProperties['integrationTest.location'] = new File(sourceSets.integrationTest.output.resourcesDir, 'projectRoot').absolutePath
     systemProperties['version'] = version
 
     testClassesDir = sourceSets.integrationTest.output.classesDir
