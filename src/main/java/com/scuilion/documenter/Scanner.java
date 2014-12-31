@@ -1,15 +1,15 @@
 package com.scuilion.documenter;
 
-import javax.lang.model.element.ExecutableElement;
+import java.util.ArrayList;
+
 import javax.lang.model.element.Element;
-import javax.lang.model.element.VariableElement;
+import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
-import javax.lang.model.element.PackageElement;
+import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.util.ElementScanner8;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Scanner extends ElementScanner8<ArrayList<String>, Void> { 
 

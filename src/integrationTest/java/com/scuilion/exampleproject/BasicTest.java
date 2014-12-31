@@ -22,7 +22,7 @@ import org.apache.commons.io.filefilter.RegexFileFilter;
 public class BasicTest{
 
     @Test
-    public void sup(){
+    public void createCompilerTest(){
         try{
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler(); 
             if (compiler == null) {
@@ -52,7 +52,8 @@ public class BasicTest{
             fileManager.close();
             System.out.println("Success: " + success);
         }catch(Exception e){
-            System.out.println("failure: " + e);
+            System.out.println("failure");
+            e.printStackTrace();
         }
         assertTrue(true);
     }
