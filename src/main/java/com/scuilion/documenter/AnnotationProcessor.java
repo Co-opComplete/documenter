@@ -10,7 +10,8 @@ import javax.lang.model.element.AnnotationMirror;
 import javax.tools.*;
 import javax.lang.model.SourceVersion;
 import java.util.Set;
-import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 @SupportedAnnotationTypes({"com.scuilion.documenter.Document"})
 public class AnnotationProcessor extends AbstractProcessor {
@@ -18,9 +19,11 @@ public class AnnotationProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
+        System.out.println("process ye");
         List<String> sup = new ArrayList<>();
         Scanner scanner = new Scanner();
         sup = scanner.scan(roundEnv.getRootElements(), null);
+
 //         
 //         SdmMap sdmMap = jointScanner.getSdmMap();
 //         for (Map.Entry<String, SDMType> entry : sdmMap.getSdmMap().entrySet()) {

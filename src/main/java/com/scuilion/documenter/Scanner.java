@@ -14,21 +14,21 @@ import java.util.List;
 public class Scanner extends ElementScanner8<ArrayList<String>, Void> { 
 
     @Override
-    public List<String> visitPackage(PackageElement e, Void p) {
+    public ArrayList<String> visitPackage(PackageElement e, Void p) {
         System.out.println( "visitPackage");
         simplePrint(e);
         return super.visitPackage(e, p);
     }
 
     @Override
-    public List<String> visitTypeParameter(TypeParameterElement e, Void p) {
+    public ArrayList<String> visitTypeParameter(TypeParameterElement e, Void p) {
         System.out.println( "visitTypeParameter");
         simplePrint(e);
         return super.visitTypeParameter(e, p);
     }
 
     @Override
-    public List<String> visitType(TypeElement e, Void p) {
+    public ArrayList<String> visitType(TypeElement e, Void p) {
         System.out.println( "visitType");
         simplePrint(e);
         return super.visitType(e, p);
@@ -45,7 +45,7 @@ public class Scanner extends ElementScanner8<ArrayList<String>, Void> {
     }
 
     @Override
-    public List<String> visitExecutable(ExecutableElement e, Void p) {
+    public ArrayList<String> visitExecutable(ExecutableElement e, Void p) {
 
         if(e.getReturnType().getKind() == TypeKind.DECLARED) {
             simplePrint(e);
@@ -60,7 +60,7 @@ public class Scanner extends ElementScanner8<ArrayList<String>, Void> {
     }
 
     @Override
-    public List<String> visitVariable(VariableElement e, Void p) {
+    public ArrayList<String> visitVariable(VariableElement e, Void p) {
         System.out.println( "visitVariable");
         if(e.asType().getKind() == TypeKind.DECLARED) {
             simplePrint(e);
