@@ -1,4 +1,4 @@
-package com.scuilion.exampleproject;
+package projectRoot.main.java.com.scuilion;
 
 import com.scuilion.documenter.Document;
 
