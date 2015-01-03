@@ -1,6 +1,7 @@
 .*
-build/
+build*/
 /gradle
 .gradle
 gradlew*
 bin/
+/build-eclipse/

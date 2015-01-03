@@ -12,6 +12,12 @@ apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
+eclipse {
+    classpath {
+        defaultOutputDir = file('build-eclipse')
+    }
+}
+
 repositories {
     mavenCentral()
     mavenLocal()
@@ -37,9 +43,10 @@ configurations {
 }
 
 dependencies{
-    //compile 'com.programmaticallyspeaking.aptdemo:apt-demo:1.0-SNAPSHOT'
     compile 'commons-io:commons-io:2.4'
+    compile 'javassist:javassist:3.12.1.GA'
     testCompile 'junit:junit:4.11'
+    
 
     integrationTestRuntime files("${System.properties['java.home']}/../lib/tools.jar") 
 }
@@ -71,4 +78,5 @@ task integrationTest(type:Test){
 }
 
 apply plugin: 'utils'
+
 
