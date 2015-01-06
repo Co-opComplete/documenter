@@ -3,16 +3,10 @@ package projectRoot.main.java.com.scuilion;
 import com.scuilion.documenter.Document;
 
 @Document(priority=100)
-class SomeClass{
-
-    {
-        @Document(priority=600)
-        String cha = "";
-        System.out.println( );
-    }
+class ProcessorTestClass{
 
     @Document(priority=200)
-    public void SomeClass(){
+    public ProcessorTestClass(){
     }
 
     @Document(priority=300)
@@ -24,7 +18,7 @@ class SomeClass{
         @Document(priority=-1)
         Integer foo = 3;
 
-        @Document(priority=-1)
+        @Document(priority=-2)
         Integer bar = 2;
 
         return foo + bar;
@@ -33,6 +27,10 @@ class SomeClass{
     @Document(priority=500) 
     public Integer anotherMethod(){
         return 5;
+    }
+    
+    public String withParameter(@Document(priority=700)String with) {
+        return with;
     }
 
 }

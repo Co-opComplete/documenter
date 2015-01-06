@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
@@ -22,10 +21,26 @@ import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.junit.Test;
 
-public class BasicTest {
+public class ProcessorIntegTest {
+
+//    @SuppressWarnings({ "unchecked", "rawtypes" })
+//    @Captor
+//    private ArgumentCaptor<Set<? extends TypeElement>> argument = ArgumentCaptor.forClass((Class)Set.class); //Set<? extends TypeElement>.class);
+//    
+//    @Mock
+//    private RoundEnvironment roundEnviroment;// = mock(RoundEnvironment.class);
+//    
+//    @Before
+//    public void init() {
+//        MockitoAnnotations.initMocks(this);
+//        when(roundEnviroment.processingOver()).thenReturn(true);
+//    }
 
     @Test
     public void createCompilerTest() {
+
+        //when(annotationProcessor.process(argument.capture(), any(RoundEnvironment.class)));
+
         try {
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
             if (compiler == null) {
@@ -44,24 +59,21 @@ public class BasicTest {
             Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(javaFiles);
             JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, getOptions(), null, compilationUnits);
 
-            boolean success = task.call();
-
-            for (Diagnostic<?> diagnostic : diagnostics.getDiagnostics()) {
-                System.out.format("On line %d in %s%n", diagnostic.getLineNumber(), diagnostic);
-            }
+            assertTrue(task.call());
 
             fileManager.close();
-            System.out.println("Success: " + success);
+
         } catch (Exception e) {
             System.out.println("failure");
             e.printStackTrace();
         }
-        assertTrue(true);
     }
+    
     private File getRootDir() {
         Path currentRelativePath = Paths.get("");
         return currentRelativePath.toAbsolutePath().toFile();
     }
+
     private File getFilesToCompile() {
         return new File(getRootDir(), "src/integrationTest/resources/projectRoot");
     }

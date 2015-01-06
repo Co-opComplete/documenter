@@ -11,12 +11,11 @@ ElementType.ANNOTATION_TYPE,
 ElementType.CONSTRUCTOR,
 ElementType.FIELD,
 ElementType.METHOD,
-ElementType.PACKAGE,
 ElementType.PARAMETER,
 ElementType.TYPE,
 ElementType.LOCAL_VARIABLE,
-ElementType.TYPE_PARAMETER,
-ElementType.TYPE_USE })
+ElementType.TYPE_PARAMETER
+ })
 public @interface Document{
     int priority();
 }

@@ -46,8 +46,8 @@ dependencies{
     compile 'commons-io:commons-io:2.4'
     compile 'javassist:javassist:3.12.1.GA'
     testCompile 'junit:junit:4.11'
+    testCompile 'org.mockito:mockito-all:1.10.19'
     
-
     integrationTestRuntime files("${System.properties['java.home']}/../lib/tools.jar") 
 }
 
