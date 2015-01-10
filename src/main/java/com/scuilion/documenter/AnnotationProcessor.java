@@ -1,5 +1,6 @@
 package com.scuilion.documenter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +29,7 @@ public class AnnotationProcessor extends AbstractProcessor {
             scanner.scan(roundEnv.getRootElements(), documents);
         }
         System.out.println(Arrays.toString(documents.toArray()));
+        PropertyFile.update(documents, new File(""));
         return true;
     }
 

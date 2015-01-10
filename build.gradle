@@ -45,6 +45,9 @@ configurations {
 dependencies{
     compile 'commons-io:commons-io:2.4'
     compile 'javassist:javassist:3.12.1.GA'
+	compile 'commons-configuration:commons-configuration:1.10'
+ 
+
     testCompile 'junit:junit:4.12'
     //testCompile 'org.mockito:mockito-all:1.10.19'
     testCompile 'org.mockito:mockito-all:1.9.5'
