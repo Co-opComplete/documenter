@@ -45,9 +45,13 @@ configurations {
 dependencies{
     compile 'commons-io:commons-io:2.4'
     compile 'javassist:javassist:3.12.1.GA'
-    testCompile 'junit:junit:4.11'
-    testCompile 'org.mockito:mockito-all:1.10.19'
-    
+    testCompile 'junit:junit:4.12'
+    //testCompile 'org.mockito:mockito-all:1.10.19'
+    testCompile 'org.mockito:mockito-all:1.9.5'
+    testCompile 'org.powermock:powermock-core:1.6.1'
+    testCompile 'org.powermock:powermock-module-junit4:1.6.1'
+    testCompile 'org.powermock:powermock-api-mockito:1.6.1'
+
     integrationTestRuntime files("${System.properties['java.home']}/../lib/tools.jar") 
 }
 

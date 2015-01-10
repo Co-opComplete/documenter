@@ -18,6 +18,7 @@ ElementType.TYPE_PARAMETER
  })
 public @interface Document{
     int priority();
+//    String key();
 }
 
 

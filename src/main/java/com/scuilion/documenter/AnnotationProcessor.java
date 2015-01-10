@@ -1,6 +1,7 @@
 package com.scuilion.documenter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,11 @@ import javax.lang.model.element.TypeElement;
 public class AnnotationProcessor extends AbstractProcessor {
 
     private List<String> documents;
-    
+
+    public AnnotationProcessor() {
+        super();
+    }
+
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         documents = new ArrayList<>();
@@ -22,6 +27,7 @@ public class AnnotationProcessor extends AbstractProcessor {
             Scanner scanner = new Scanner();
             scanner.scan(roundEnv.getRootElements(), documents);
         }
+        System.out.println(Arrays.toString(documents.toArray()));
         return true;
     }
 

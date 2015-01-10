@@ -20,37 +20,27 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.junit.Test;
+import org.mockito.Mock;
+
+import com.scuilion.documenter.AnnotationProcessor;
 
 public class ProcessorIntegTest {
 
-//    @SuppressWarnings({ "unchecked", "rawtypes" })
-//    @Captor
-//    private ArgumentCaptor<Set<? extends TypeElement>> argument = ArgumentCaptor.forClass((Class)Set.class); //Set<? extends TypeElement>.class);
-//    
-//    @Mock
-//    private RoundEnvironment roundEnviroment;// = mock(RoundEnvironment.class);
-//    
-//    @Before
-//    public void init() {
-//        MockitoAnnotations.initMocks(this);
-//        when(roundEnviroment.processingOver()).thenReturn(true);
-//    }
+    @Mock
+    AnnotationProcessor annotationProcessor;
+    
 
     @Test
     public void createCompilerTest() {
 
-        //when(annotationProcessor.process(argument.capture(), any(RoundEnvironment.class)));
-
         try {
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
             if (compiler == null) {
-                System.out.println("No system java compiler available");
+                throw new RuntimeException("No system java compiler available.\n Verify that you are running using the jdk, NOT the jre.");
             }
 
-            @SuppressWarnings("unused")
             DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
 
-            @SuppressWarnings("null")
             StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
 
             File dir = getFilesToCompile();
