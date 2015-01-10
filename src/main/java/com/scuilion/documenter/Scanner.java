@@ -11,39 +11,42 @@ import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.ElementScanner8;
 
-public class Scanner extends ElementScanner8<ArrayList<String>, List<String>> { 
+public class Scanner extends ElementScanner8<ArrayList<Note>, List<Note>> { 
     @Override
-    public ArrayList<String> visitPackage(PackageElement e, List<String> p) {
+    public ArrayList<Note> visitPackage(PackageElement e, List<Note> p) {
         addDocument(e, p);
         return super.visitPackage(e, p);
     }
 
     @Override
-    public ArrayList<String> visitTypeParameter(TypeParameterElement e, List<String> p) {
+    public ArrayList<Note> visitTypeParameter(TypeParameterElement e, List<Note> p) {
         addDocument(e, p);
         return super.visitTypeParameter(e, p);
     }
 
     @Override
-    public ArrayList<String> visitType(TypeElement e, List<String> p) {
+    public ArrayList<Note> visitType(TypeElement e, List<Note> p) {
         addDocument(e, p);
         return super.visitType(e, p);
     }
 
     @Override
-    public ArrayList<String> visitExecutable(ExecutableElement e, List<String> p) {
+    public ArrayList<Note> visitExecutable(ExecutableElement e, List<Note> p) {
     	addDocument(e.getEnclosingElement(), p);
         return super.visitExecutable(e, p);
     }
 
     @Override
-    public ArrayList<String> visitVariable(VariableElement e, List<String> p) {
+    public ArrayList<Note> visitVariable(VariableElement e, List<Note> p) {
     	addDocument(e, p);
         return super.visitVariable(e, p);
     } 
 
-    protected void addDocument(Element e, List<String> p) {
-        p.add(Integer.toString(e.getAnnotation(Document.class).priority()));
+    protected void addDocument(Element e, List<Note> p) {
+        int priority = e.getAnnotation(Document.class).priority();
+        String key = e.getAnnotation(Document.class).key();
+    	Note note = new Note(key, priority);
+        p.add(note);
     }
 
 }

@@ -14,11 +14,10 @@ ElementType.METHOD,
 ElementType.PARAMETER,
 ElementType.TYPE,
 ElementType.LOCAL_VARIABLE,
-ElementType.TYPE_PARAMETER
- })
+ElementType.TYPE_PARAMETER })
 public @interface Document{
     int priority();
-//    String key();
+    String key();
 }
 
 

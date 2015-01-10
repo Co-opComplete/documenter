@@ -15,7 +15,7 @@ import javax.lang.model.element.TypeElement;
 @SupportedAnnotationTypes({"com.scuilion.documenter.Document"})
 public class AnnotationProcessor extends AbstractProcessor {
 
-    private List<String> documents;
+    private List<Note> documents;
 
     public AnnotationProcessor() {
         super();

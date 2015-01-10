@@ -8,10 +8,10 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 
 public class PropertyFile {
 
-	public static void update(List<String> documents, File name) {
+	public static void update(List<Note> notes, File name) {
 		try {
 			PropertiesConfiguration config = new PropertiesConfiguration(name.toString());
-            documents.forEach(document -> config.addProperty(document,"x"));
+            notes.forEach(document -> config.addProperty(document.getKey(),document.getPriority()));
             config.save();
 		} catch (ConfigurationException e) {
 			e.printStackTrace();

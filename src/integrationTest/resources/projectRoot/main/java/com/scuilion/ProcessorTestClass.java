@@ -2,34 +2,34 @@ package projectRoot.main.java.com.scuilion;
 
 import com.scuilion.documenter.Document;
 
-@Document(priority=100)
+@Document(key="class", priority=100)
 class ProcessorTestClass{
 
-    @Document(priority=200)
+    @Document(key="constructor", priority=200)
     public ProcessorTestClass(){
     }
 
-    @Document(priority=300)
+    @Document(key="instance variable", priority=300)
     String really = "foo";
     
-    @Document(priority=400) 
+    @Document(key="someMethod", priority=400) 
     public Integer someMethod(){
 
-        @Document(priority=-1)
+        @Document(key="field", priority=-1)
         Integer foo = 3;
 
-        @Document(priority=-2)
+        @Document(key="field", priority=-2)
         Integer bar = 2;
 
         return foo + bar;
     }
 
-    @Document(priority=500) 
+    @Document(key="anotherMethod", priority=500) 
     public Integer anotherMethod(){
         return 5;
     }
     
-    public String withParameter(@Document(priority=700)String with) {
+    public String withParameter(@Document(key="type use", priority=700)String with) {
         return with;
     }
 

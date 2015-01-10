@@ -1,7 +1,11 @@
 package com.scuilion.documenter;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -17,9 +21,8 @@ import javax.lang.model.element.VariableElement;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Spy;
-import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 public class ScannerTest{
     
@@ -38,63 +41,69 @@ public class ScannerTest{
 
     @Test
     public void visitVariableTest(){
-        resetupMockDocument(variableElement, 50);
+        resetupMockDocument(variableElement, 50, "variable");
         
-        List<String> documents = new ArrayList<>();
+        List<Note> documents = new ArrayList<>();
         scanner.visitVariable(variableElement, documents);
 
-        verify(scanner).addDocument(any(Element.class), anyListOf(String.class));
-        assertTrue(documents.get(0).equals("50"));
+        verify(scanner).addDocument(any(Element.class), anyListOf(Note.class));
+        assertEquals(50, documents.get(0).getPriority());
+        assertEquals("variable", documents.get(0).getKey());
     }
 
     @Test
     public void visitExecutableTest(){
-        resetupMockDocument(executableElement, 40);
+        resetupMockDocument(executableElement, 40, "executable");
         when(executableElement.getEnclosingElement()).thenReturn(executableElement);
 
-        List<String> documents = new ArrayList<>();
+        List<Note> documents = new ArrayList<>();
         scanner.visitExecutable(executableElement, documents);
 
-        verify(scanner).addDocument(any(Element.class), anyListOf(String.class));
-        assertTrue(documents.get(0).equals("40"));
+        verify(scanner).addDocument(any(Element.class), anyListOf(Note.class));
+        assertEquals(40, documents.get(0).getPriority());
+        assertEquals("executable", documents.get(0).getKey());
     }
 
     @Test
     public void visitPackageElementTest(){
-        resetupMockDocument(packageElement, 30);
+        resetupMockDocument(packageElement, 30, "package");
         
-        List<String> documents = new ArrayList<>();
+        List<Note> documents = new ArrayList<>();
         scanner.visitPackage(packageElement, documents);
 
-        verify(scanner).addDocument(any(Element.class), anyListOf(String.class));
-        assertTrue(documents.get(0).equals("30"));
+        verify(scanner).addDocument(any(Element.class), anyListOf(Note.class));
+        assertEquals(30, documents.get(0).getPriority());
+        assertEquals("package", documents.get(0).getKey());
     }
 
     @Test
     public void visitTypeTest(){
-        resetupMockDocument(typeElement, 10);
+        resetupMockDocument(typeElement, 10, "type");
         
-        List<String> documents = new ArrayList<>();
+        List<Note> documents = new ArrayList<>();
         scanner.visitType(typeElement, documents);
 
-        verify(scanner).addDocument(any(Element.class), anyListOf(String.class));
-        assertTrue(documents.get(0).equals("10"));
+        verify(scanner).addDocument(any(Element.class), anyListOf(Note.class));
+        assertEquals(10, documents.get(0).getPriority());
+        assertEquals("type", documents.get(0).getKey());
     }
     
     @Test
     public void visitTypeParameterTest(){
-        resetupMockDocument(typeParameterElement, 20);
+        resetupMockDocument(typeParameterElement, 20, "parameter");
 
-        List<String> documents = new ArrayList<>();
+        List<Note> documents = new ArrayList<>();
         scanner.visitTypeParameter(typeParameterElement, documents);
 
-        verify(scanner).addDocument(any(Element.class), anyListOf(String.class));
-        assertTrue(documents.get(0).equals("20"));
+        verify(scanner).addDocument(any(Element.class), anyListOf(Note.class));
+        assertEquals(20, documents.get(0).getPriority());
+        assertEquals("parameter", documents.get(0).getKey());
     }
 
-    private void resetupMockDocument(Element e, int priority) {
+    private void resetupMockDocument(Element e, int priority, String key) {
         Document document = mock(Document.class);
         when(document.priority()).thenReturn(priority);
+        when(document.key()).thenReturn(key);
 
         when(e.getAnnotation(Document.class)).thenReturn(document);
     }

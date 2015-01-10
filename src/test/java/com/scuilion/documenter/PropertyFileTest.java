@@ -2,12 +2,8 @@ package com.scuilion.documenter;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,11 +18,16 @@ public class PropertyFileTest {
 	public void createFileTest() throws IOException {
 		File propertyFile = testFolder.newFile("application.properties");
 		propertyFile.createNewFile();
-		List<String> documents = Arrays.asList("100", "200", "300");
-		System.out.println(propertyFile);
+		List<Note> documents = createNotes();
 		PropertyFile.update(documents, propertyFile);
-		try (Stream<String> stream = Files.lines(Paths.get(propertyFile.toString()), Charset.defaultCharset())) {
-			stream.forEach(System.out::println);
-		}
 	}
+
+	private List<Note> createNotes() {
+		List<Note> notes = new ArrayList<>();
+		notes.add(new Note("first", 10));
+		notes.add(new Note("second", 20));
+		notes.add(new Note("third", 30));
+		return notes;
+	}
+
 }
