@@ -32,11 +32,23 @@ public class Scanner extends ElementScanner8<ArrayList<Note>, List<Note>> {
 
     @Override
     public ArrayList<Note> visitExecutable(ExecutableElement e, List<Note> p) {
+//    	ifConstructor(e, p);
+    	System.out.println(e.getSimpleName());
+//    	System.out.println(e.getReturnType().toString());
     	addDocument(e.getEnclosingElement(), p);
         return super.visitExecutable(e, p);
     }
 
-    @Override
+    private void ifConstructor(ExecutableElement e, List<Note> p) {
+    	if (e.getSimpleName().toString().equals("<init>")) {
+    		System.out.println("it's the constur");
+    		Document d =e.getAnnotation(Document.class);
+            addDocument(e, p);
+    	}
+
+	}
+
+	@Override
     public ArrayList<Note> visitVariable(VariableElement e, List<Note> p) {
     	addDocument(e, p);
         return super.visitVariable(e, p);

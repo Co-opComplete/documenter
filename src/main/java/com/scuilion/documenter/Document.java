@@ -12,13 +12,12 @@ ElementType.CONSTRUCTOR,
 ElementType.FIELD,
 ElementType.METHOD,
 ElementType.PARAMETER,
+ElementType.PACKAGE,
 ElementType.TYPE,
 ElementType.LOCAL_VARIABLE,
-ElementType.TYPE_PARAMETER })
+ElementType.TYPE_PARAMETER,
+ElementType.TYPE_USE })
 public @interface Document{
     int priority();
     String key();
 }
-
-
-

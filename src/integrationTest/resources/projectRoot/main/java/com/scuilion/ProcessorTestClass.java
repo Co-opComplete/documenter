@@ -1,5 +1,8 @@
 package projectRoot.main.java.com.scuilion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.scuilion.documenter.Document;
 
 @Document(key="class", priority=100)
@@ -16,21 +19,21 @@ class ProcessorTestClass{
     public Integer someMethod(){
 
         @Document(key="field", priority=-1)
-        Integer foo = 3;
+        Double foo = 3.0;
 
         @Document(key="field", priority=-2)
         Integer bar = 2;
 
-        return foo + bar;
+        return bar + Integer.valueOf(foo.toString());
     }
 
     @Document(key="anotherMethod", priority=500) 
-    public Integer anotherMethod(){
-        return 5;
+    public float anotherMethod(){
+		return 0.0f;
     }
     
-    public String withParameter(@Document(key="type use", priority=700)String with) {
-        return with;
+    public List<String> withParameter(@Document(key="type use", priority=700)boolean with) {
+        return new ArrayList<>();
     }
 
 }

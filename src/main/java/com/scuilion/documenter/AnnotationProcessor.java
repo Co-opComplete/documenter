@@ -15,25 +15,31 @@ import javax.lang.model.element.TypeElement;
 @SupportedAnnotationTypes({"com.scuilion.documenter.Document"})
 public class AnnotationProcessor extends AbstractProcessor {
 
-    private List<Note> documents;
-
     public AnnotationProcessor() {
         super();
     }
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        List<Note> documents;
         documents = new ArrayList<>();
         if (roundEnv.processingOver() == false) {
             Scanner scanner = new Scanner();
             scanner.scan(roundEnv.getRootElements(), documents);
+            updateProperties(documents);
+            updateJson(documents);
         }
-        System.out.println(Arrays.toString(documents.toArray()));
-        PropertyFile.update(documents, new File(""));
         return true;
     }
 
-    @Override
+    private void updateJson(List<Note> documents) {
+	}
+
+	private void updateProperties(List<Note> documents) {
+//        PropertyFile.update(documents, new File("documenter.properties"));
+	}
+
+	@Override
     public SourceVersion getSupportedSourceVersion(){
         return SourceVersion.latestSupported();
     }
