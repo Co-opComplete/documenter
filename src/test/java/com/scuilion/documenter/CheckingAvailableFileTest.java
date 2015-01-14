@@ -44,9 +44,9 @@ public class CheckingAvailableFileTest {
 
 	private List<Note> createNotes() {
 		List<Note> notes = new ArrayList<>();
-		notes.add(new Note("first", 10));
-		notes.add(new Note("second", 20));
-		notes.add(new Note("third", 30));
+		notes.add(new Note("first", 10, "class1"));
+		notes.add(new Note("second", 20, "class1"));
+		notes.add(new Note("third", 30, "class1"));
 		return notes;
 	}
 

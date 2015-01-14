@@ -1,7 +1,7 @@
 package com.scuilion.documenter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
@@ -11,27 +11,27 @@ import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.ElementScanner8;
 
-public class Scanner extends ElementScanner8<ArrayList<Note>, List<Note>> { 
+public class Scanner extends ElementScanner8<HashMap<String, Note>, Map<String, Note>> { 
     @Override
-    public ArrayList<Note> visitPackage(PackageElement e, List<Note> p) {
+    public HashMap<String, Note> visitPackage(PackageElement e, Map<String, Note> p) {
         addDocument(e, p);
         return super.visitPackage(e, p);
     }
 
     @Override
-    public ArrayList<Note> visitTypeParameter(TypeParameterElement e, List<Note> p) {
+    public HashMap<String, Note> visitTypeParameter(TypeParameterElement e, Map<String, Note> p) {
         addDocument(e, p);
         return super.visitTypeParameter(e, p);
     }
 
     @Override
-    public ArrayList<Note> visitType(TypeElement e, List<Note> p) {
+    public HashMap<String, Note> visitType(TypeElement e, Map<String, Note> p) {
         addDocument(e, p);
         return super.visitType(e, p);
     }
 
     @Override
-    public ArrayList<Note> visitExecutable(ExecutableElement e, List<Note> p) {
+    public HashMap<String, Note> visitExecutable(ExecutableElement e, Map<String, Note> p) {
 //    	ifConstructor(e, p);
     	System.out.println(e.getSimpleName());
 //    	System.out.println(e.getReturnType().toString());
@@ -39,26 +39,27 @@ public class Scanner extends ElementScanner8<ArrayList<Note>, List<Note>> {
         return super.visitExecutable(e, p);
     }
 
-    private void ifConstructor(ExecutableElement e, List<Note> p) {
+    private void ifConstructor(ExecutableElement e, Map<String, Note> p) {
     	if (e.getSimpleName().toString().equals("<init>")) {
     		System.out.println("it's the constur");
     		Document d =e.getAnnotation(Document.class);
             addDocument(e, p);
     	}
-
 	}
 
 	@Override
-    public ArrayList<Note> visitVariable(VariableElement e, List<Note> p) {
+    public HashMap<String, Note> visitVariable(VariableElement e, Map<String, Note> p) {
     	addDocument(e, p);
         return super.visitVariable(e, p);
     } 
 
-    protected void addDocument(Element e, List<Note> p) {
+    protected void addDocument(Element e, Map<String, Note> p) {
         int priority = e.getAnnotation(Document.class).priority();
-        String key = e.getAnnotation(Document.class).key();
-    	Note note = new Note(key, priority);
-        p.add(note);
+        String shortKey = e.getAnnotation(Document.class).key();
+        String className = e.toString();
+        String fullKey =  className + "." + shortKey;
+    	Note note = new Note(fullKey, priority, className);
+        p.put(fullKey, note);
     }
 
 }

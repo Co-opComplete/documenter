@@ -1,15 +1,16 @@
 package com.scuilion.documenter;
 
 public class Note {
-	public Note(String key, int priority) {
+	private String key;
+	private int priority;
+	private String className;
+
+	public Note(String key, int priority, String className) {
 		super();
 		this.key = key;
 		this.priority = priority;
+		this.className = className;
 	}
-
-	private String key;
-
-	private int priority;
 
 	public String getKey() {
 		return key;
@@ -24,6 +25,14 @@ public class Note {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
 	}
 
 }

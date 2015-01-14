@@ -1,15 +1,15 @@
 package com.scuilion.documenter;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.anyMap;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
@@ -43,61 +43,70 @@ public class ScannerTest{
     public void visitVariableTest(){
         resetupMockDocument(variableElement, 50, "variable");
         
-        List<Note> documents = new ArrayList<>();
+        Map<String, Note> documents = new HashMap<>();
         scanner.visitVariable(variableElement, documents);
 
-        verify(scanner).addDocument(any(Element.class), anyListOf(Note.class));
-        assertEquals(50, documents.get(0).getPriority());
-        assertEquals("variable", documents.get(0).getKey());
+        verify(scanner).addDocument(any(Element.class), anyStringSetMap());//anyListOf(Note.class));
+//        assertEquals(50, documents.get(0).getPriority());
+        Note actual = documents.get("variableElement.variable");
+        assertEquals(50, actual.getPriority());
+        assertEquals("variableElement.variable", actual.getKey());
     }
-
+    private static Map<String, Note> anyStringSetMap() {
+    	  return any();
+    }
     @Test
     public void visitExecutableTest(){
         resetupMockDocument(executableElement, 40, "executable");
         when(executableElement.getEnclosingElement()).thenReturn(executableElement);
 
-        List<Note> documents = new ArrayList<>();
+        Map<String, Note> documents = new HashMap<>();
         scanner.visitExecutable(executableElement, documents);
 
-        verify(scanner).addDocument(any(Element.class), anyListOf(Note.class));
-        assertEquals(40, documents.get(0).getPriority());
-        assertEquals("executable", documents.get(0).getKey());
+        verify(scanner).addDocument(any(Element.class), anyStringSetMap());
+        Note actual = documents.get("executableElement.executable");
+        assertEquals(40, actual.getPriority());
+        assertEquals("executableElement.executable", actual.getKey());
     }
 
     @Test
     public void visitPackageElementTest(){
         resetupMockDocument(packageElement, 30, "package");
         
-        List<Note> documents = new ArrayList<>();
+        Map<String, Note> documents = new HashMap<>();
         scanner.visitPackage(packageElement, documents);
 
-        verify(scanner).addDocument(any(Element.class), anyListOf(Note.class));
-        assertEquals(30, documents.get(0).getPriority());
-        assertEquals("package", documents.get(0).getKey());
+        verify(scanner).addDocument(any(Element.class), anyStringSetMap());
+
+        Note actual = documents.get("packageElement.package");
+        assertEquals(30, actual.getPriority());
+        assertEquals("packageElement.package", actual.getKey());
     }
 
     @Test
     public void visitTypeTest(){
         resetupMockDocument(typeElement, 10, "type");
         
-        List<Note> documents = new ArrayList<>();
+        Map<String, Note> documents = new HashMap<>();
         scanner.visitType(typeElement, documents);
 
-        verify(scanner).addDocument(any(Element.class), anyListOf(Note.class));
-        assertEquals(10, documents.get(0).getPriority());
-        assertEquals("type", documents.get(0).getKey());
+        verify(scanner).addDocument(any(Element.class), anyStringSetMap());
+        Note actual = documents.get("typeElement.type");
+        assertEquals(10, actual.getPriority());
+        assertEquals("typeElement.type", actual.getKey());
     }
     
     @Test
     public void visitTypeParameterTest(){
         resetupMockDocument(typeParameterElement, 20, "parameter");
 
-        List<Note> documents = new ArrayList<>();
+        Map<String, Note> documents = new HashMap<>();
         scanner.visitTypeParameter(typeParameterElement, documents);
 
-        verify(scanner).addDocument(any(Element.class), anyListOf(Note.class));
-        assertEquals(20, documents.get(0).getPriority());
-        assertEquals("parameter", documents.get(0).getKey());
+        verify(scanner).addDocument(any(Element.class), anyStringSetMap());
+        Note actual = documents.get("typeParameterElement.parameter");
+        assertEquals(20, actual.getPriority());
+        assertEquals("typeParameterElement.parameter", actual.getKey());
     }
 
     private void resetupMockDocument(Element e, int priority, String key) {

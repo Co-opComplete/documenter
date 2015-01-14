@@ -33,7 +33,7 @@ public class UpdatingNotes {
 		File actualFile = PropertyFile.getFileName();
 		assertEquals(3, Files.lines(actualFile.toPath()).count());
 
-		PropertyFile.update(Arrays.asList(new Note("fourth", 40)));
+		PropertyFile.update(Arrays.asList(new Note("fourth", 40, "class1")));
 		assertEquals(4, Files.lines(actualFile.toPath()).count());
 //		Properties properties = new Properties();
 //        properties.load(new FileInputStream(actualFile));
@@ -45,9 +45,9 @@ public class UpdatingNotes {
 	
 	private List<Note> createNotes() {
 		List<Note> notes = new ArrayList<>();
-		notes.add(new Note("first", 10));
-		notes.add(new Note("second", 20));
-		notes.add(new Note("third", 30));
+		notes.add(new Note("first", 10, "class1"));
+		notes.add(new Note("second", 20, "class1"));
+		notes.add(new Note("third", 30, "class1"));
 		return notes;
 	}
 
