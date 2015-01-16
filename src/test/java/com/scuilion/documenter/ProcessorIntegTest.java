@@ -1,4 +1,4 @@
-package com.scuilion.exampleproject;
+package com.scuilion.documenter;
 
 import static org.junit.Assert.assertTrue;
 
@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
@@ -21,8 +22,6 @@ import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.junit.Test;
 import org.mockito.Mock;
-
-import com.scuilion.documenter.AnnotationProcessor;
 
 public class ProcessorIntegTest {
 
@@ -38,6 +37,9 @@ public class ProcessorIntegTest {
             if (compiler == null) {
                 throw new RuntimeException("No system java compiler available.\n Verify that you are running using the jdk, NOT the jre.");
             }
+            Properties props = System.getProperties();
+            props.setProperty("exec.mainClass", "org.jboss.weld.environment.se.StartMain");
+//            options.add("-Dexec.mainClass=org.jboss.weld.environment.se.StartMain");
 
             DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
 

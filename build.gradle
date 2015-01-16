@@ -47,6 +47,8 @@ dependencies{
     compile 'javassist:javassist:3.12.1.GA'
 	compile 'commons-configuration:commons-configuration:1.10'
 	compile 'com.google.code.gson:gson:2.3.1'
+	compile 'org.jboss.weld:weld-se:1.0.1-Final'
+	compile 'org.jboss.weld:weld-core:3.0.0.Alpha3'
 
     testCompile 'junit:junit:4.12'
     //testCompile 'org.mockito:mockito-all:1.10.19'
