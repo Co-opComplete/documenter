@@ -11,32 +11,31 @@ import javax.inject.Inject;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 
-import org.jboss.weld.environment.se.StartMain;
-import org.jboss.weld.environment.se.Weld;
-import org.jboss.weld.environment.se.WeldContainer;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 @SupportedAnnotationTypes({ "com.scuilion.documenter.Document" })
 public class AnnotationProcessor extends AbstractProcessor {
 
 	@Inject 
-	Writer writer; 
+	Writer writer;// = new DefaultWriter();
 
 	public AnnotationProcessor() {
 		super();
+		injectWriter();
 	}
 
 	private void injectWriter() {
-		Weld weld = new Weld();
-        WeldContainer container = weld.initialize();
-        writer = container.instance().select(Writer.class).get();
-        weld.shutdown();
+//		Weld weld = new Weld();
+//        WeldContainer container = weld.initialize();
+//        writer = container.instance().select(Writer.class).get();
+//        weld.shutdown();
+		Injector injector = Guice.createInjector(new WriterModule());
+	    writer = injector.getInstance(DefaultWriter.class);
 	}
 
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-		injectWriter();
-		String[] args = null;
-		StartMain.main(args);
 		Map<String, Note> documents;
 		documents = new HashMap<>();
 		if (!roundEnv.processingOver()) {

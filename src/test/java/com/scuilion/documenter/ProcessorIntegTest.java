@@ -21,53 +21,41 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.junit.Test;
-import org.mockito.Mock;
 
 public class ProcessorIntegTest {
 
-    @Mock
-    AnnotationProcessor annotationProcessor;
-    
-
     @Test
-    public void createCompilerTest() {
+    public void createCompilerTest() throws IOException {
 
-        try {
-            JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-            if (compiler == null) {
-                throw new RuntimeException("No system java compiler available.\n Verify that you are running using the jdk, NOT the jre.");
-            }
-            Properties props = System.getProperties();
-            props.setProperty("exec.mainClass", "org.jboss.weld.environment.se.StartMain");
-//            options.add("-Dexec.mainClass=org.jboss.weld.environment.se.StartMain");
-
-            DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
-
-            StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
-
-            File dir = getFilesToCompile();
-            Collection<File> javaFiles = FileUtils.listFiles(dir, new RegexFileFilter(".*\\.java$"), TrueFileFilter.INSTANCE);
-
-            Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(javaFiles);
-            JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, getOptions(), null, compilationUnits);
-
-            assertTrue(task.call());
-
-            fileManager.close();
-
-        } catch (Exception e) {
-            System.out.println("failure");
-            e.printStackTrace();
+        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        if (compiler == null) {
+            throw new RuntimeException("No system java compiler available.\n Verify that you are running using the jdk, NOT the jre.");
         }
+        Properties props = System.getProperties();
+        props.setProperty("exec.mainClass", "org.jboss.weld.environment.se.StartMain");
+
+        DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
+
+        StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
+
+        File dir = getFilesToCompile();
+        Collection<File> javaFiles = FileUtils.listFiles(dir, new RegexFileFilter(".*\\.java$"), TrueFileFilter.INSTANCE);
+
+        Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(javaFiles);
+        JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, getOptions(), null, compilationUnits);
+
+        assertTrue(task.call());
+
+        fileManager.close();
     }
-    
+
     private File getRootDir() {
         Path currentRelativePath = Paths.get("");
         return currentRelativePath.toAbsolutePath().toFile();
     }
 
     private File getFilesToCompile() {
-        return new File(getRootDir(), "src/integrationTest/resources/projectRoot");
+        return new File(getRootDir(), "src/test/resources/projectRoot");
     }
 
     private List<String> getOptions() throws IOException {
@@ -77,6 +65,7 @@ public class ProcessorIntegTest {
         return options;
 
     }
+
     private String getBuildDir() {
         File buildDir = new File(getRootDir(), "build");
         if (!buildDir.exists()) {

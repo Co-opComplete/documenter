@@ -4,8 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.enterprise.inject.Alternative;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
