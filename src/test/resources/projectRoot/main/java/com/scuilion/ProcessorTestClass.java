@@ -32,7 +32,8 @@ class ProcessorTestClass{
 		return 0.0f;
     }
     
-    public List<String> withParameter(@Document(key="type use", priority=700)boolean with) {
+    public List<@Document(key="type parameter", priority=800)String>
+        withParameter(@Document(key="type use", priority=700)boolean with) {
         return new ArrayList<>();
     }
 
