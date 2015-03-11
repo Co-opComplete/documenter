@@ -11,8 +11,9 @@ import javax.inject.Inject;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import org.jboss.weld.environment.se.StartMain;
+import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.environment.se.WeldContainer;
 
 @SupportedAnnotationTypes({ "com.scuilion.documenter.Document" })
 public class AnnotationProcessor extends AbstractProcessor {
@@ -22,20 +23,18 @@ public class AnnotationProcessor extends AbstractProcessor {
 
 	public AnnotationProcessor() {
 		super();
-		injectWriter();
 	}
 
 	private void injectWriter() {
-//		Weld weld = new Weld();
-//        WeldContainer container = weld.initialize();
-//        writer = container.instance().select(Writer.class).get();
-//        weld.shutdown();
-		Injector injector = Guice.createInjector(new WriterModule());
-	    writer = injector.getInstance(DefaultWriter.class);
+            Weld weld = new Weld();
+            WeldContainer container = weld.initialize();
+            writer = container.instance().select(Writer.class).get();
+            weld.shutdown();
 	}
 
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+		injectWriter();
 		Map<String, Note> documents;
 		documents = new HashMap<>();
 		if (!roundEnv.processingOver()) {

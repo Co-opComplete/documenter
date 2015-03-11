@@ -9,23 +9,18 @@ import com.google.gson.GsonBuilder;
 
 public class DefaultWriter implements Writer {
 
-	@Override
-	public void write(Map<String, Note> documents) {
-		String filename = "documents.json";
+    @Override
+    public void write(Map<String, Note> documents) {
+        String filename = "documents.json";
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String jsonRepresentation = gson.toJson(documents);
 
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-		String jsonRepresentation = gson.toJson(documents);
-
-		try {
-
-			FileWriter Filewriter = new FileWriter(filename);
-			Filewriter.write(jsonRepresentation);
-			Filewriter.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
+        try {
+            FileWriter Filewriter = new FileWriter(filename);
+            Filewriter.write(jsonRepresentation);
+            Filewriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
