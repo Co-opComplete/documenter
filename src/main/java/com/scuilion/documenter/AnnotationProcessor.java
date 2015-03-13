@@ -39,7 +39,8 @@ public class AnnotationProcessor extends AbstractProcessor {
         documents = new HashMap<>();
         if (!roundEnv.processingOver()) {
             Scanner scanner = new Scanner();
-            scanner.scan(roundEnv.getRootElements(), documents);
+//            scanner.scan(roundEnv.getRootElements(), documents);
+            scanner.scan(roundEnv.getElementsAnnotatedWith(com.scuilion.documenter.Document.class), documents);
             updateProperties(documents);
 //             updateJson(documents);
             System.out.println( writer);
