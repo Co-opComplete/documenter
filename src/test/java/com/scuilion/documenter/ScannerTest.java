@@ -50,9 +50,11 @@ public class ScannerTest{
         assertEquals(50, actual.getPriority());
         assertEquals("variableElement.variable", actual.getKey());
     }
+
     private static Map<String, Note> anyStringSetMap() {
     	  return any();
     }
+
     @Test
     public void visitExecutableTest(){
         resetupMockDocument(executableElement, 40, "executable");
@@ -111,9 +113,6 @@ public class ScannerTest{
         Document document = mock(Document.class);
         when(document.priority()).thenReturn(priority);
         when(document.key()).thenReturn(key);
-
         when(e.getAnnotation(Document.class)).thenReturn(document);
     }
-
 }
-

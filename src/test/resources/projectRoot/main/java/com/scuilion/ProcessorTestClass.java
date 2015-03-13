@@ -12,7 +12,7 @@ class ProcessorTestClass{
     public ProcessorTestClass(){
     }
 
-    @Document(key="instance variable", priority=300)
+    @Document(key="instance.variable", priority=300)
     String really = "foo";
     
     @Document(key="someMethod", priority=400) 

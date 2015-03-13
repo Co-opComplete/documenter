@@ -16,39 +16,39 @@ import org.junit.rules.TemporaryFolder;
 
 public class UpdatingNotes {
 
-	@Rule
-	public TemporaryFolder testFolder = new TemporaryFolder();
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
 
-	@Before
-	public void recreateTempFolder() throws IOException {
-		testFolder.create();
+    @Before
+    public void recreateTempFolder() throws IOException {
+        testFolder.create();
         PropertyFile.setTranslationLocation(testFolder.getRoot());	
-	}
+    }
 
-	@Test
-	public void addingProperties() throws IOException {
-		testFolder.newFile("message.properties");
+    @Test
+    public void addingProperties() throws IOException {
+        testFolder.newFile("message.properties");
         PropertyFile.update(createNotes());	
 
-		File actualFile = PropertyFile.getFileName();
-		assertEquals(3, Files.lines(actualFile.toPath()).count());
+        File actualFile = PropertyFile.getFileName();
+        assertEquals(3, Files.lines(actualFile.toPath()).count());
 
-		PropertyFile.update(Arrays.asList(new Note("fourth", 40, "class1")));
-		assertEquals(4, Files.lines(actualFile.toPath()).count());
-//		Properties properties = new Properties();
+        PropertyFile.update(Arrays.asList(new Note("fourth", 40, "class1")));
+        assertEquals(4, Files.lines(actualFile.toPath()).count());
+//        Properties properties = new Properties();
 //        properties.load(new FileInputStream(actualFile));
 //        for(String s :properties.stringPropertyNames()) {
 //        	System.out.println(s);
 //        }
 
-	}
+    }
 	
-	private List<Note> createNotes() {
-		List<Note> notes = new ArrayList<>();
-		notes.add(new Note("first", 10, "class1"));
-		notes.add(new Note("second", 20, "class1"));
-		notes.add(new Note("third", 30, "class1"));
-		return notes;
-	}
+    private List<Note> createNotes() {
+        List<Note> notes = new ArrayList<>();
+        notes.add(new Note("first", 10, "class1"));
+        notes.add(new Note("second", 20, "class1"));
+        notes.add(new Note("third", 30, "class1"));
+        return notes;
+    }
 
 }

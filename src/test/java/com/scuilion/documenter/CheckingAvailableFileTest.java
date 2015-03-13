@@ -11,43 +11,46 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+// import com.scuilion.documenter.Document;
+
 public class CheckingAvailableFileTest {
 
-	@Rule
-	public TemporaryFolder testFolder = new TemporaryFolder();
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
 
-	@Before
-	public void recreateTempFolder() throws IOException {
-		testFolder.create();
+//     @Document(key="test", priority=999)
+    @Before
+    public void recreateTempFolder() throws IOException {
+        testFolder.create();
         PropertyFile.setTranslationLocation(testFolder.getRoot());	
-	}
+    }
 
-	@Test
-	public void onlyGetMesages() throws IOException {
-		testFolder.newFile("somethinelse.properties");
-		assertEquals(1, PropertyFile.getListOfProperties().size());
-		assertEquals("message.properties", PropertyFile.getListOfProperties().get(0).getName());
-	}
+    @Test
+    public void onlyGetMesages() throws IOException {
+        testFolder.newFile("somethinelse.properties");
+        assertEquals(1, PropertyFile.getListOfProperties().size());
+        assertEquals("message.properties", PropertyFile.getListOfProperties().get(0).getName());
+    }
 
-	@Test
-	public void ifDefaultDoesnotExist() throws IOException {
-		assertEquals(1, PropertyFile.getListOfProperties().size());
-		assertEquals("message.properties", PropertyFile.getListOfProperties().get(0).getName());
-	}
-	@Test
-	public void gettingProperityFiles() throws IOException {
-		testFolder.newFile("message.properties");
-		testFolder.newFile("message_en_US.properties");
-		testFolder.newFile("message_fr_CA.properties");
-		assertEquals(3, PropertyFile.getListOfProperties().size());
-	}
+    @Test
+    public void ifDefaultDoesnotExist() throws IOException {
+        assertEquals(1, PropertyFile.getListOfProperties().size());
+        assertEquals("message.properties", PropertyFile.getListOfProperties().get(0).getName());
+    }
 
-	private List<Note> createNotes() {
-		List<Note> notes = new ArrayList<>();
-		notes.add(new Note("first", 10, "class1"));
-		notes.add(new Note("second", 20, "class1"));
-		notes.add(new Note("third", 30, "class1"));
-		return notes;
-	}
+    @Test
+    public void gettingProperityFiles() throws IOException {
+        testFolder.newFile("message.properties");
+        testFolder.newFile("message_en_US.properties");
+        testFolder.newFile("message_fr_CA.properties");
+        assertEquals(3, PropertyFile.getListOfProperties().size());
+    }
 
+    private List<Note> createNotes() {
+        List<Note> notes = new ArrayList<>();
+        notes.add(new Note("first", 10, "class1"));
+        notes.add(new Note("second", 20, "class1"));
+        notes.add(new Note("third", 30, "class1"));
+        return notes;
+    }
 }

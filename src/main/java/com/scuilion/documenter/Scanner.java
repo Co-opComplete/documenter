@@ -42,13 +42,13 @@ public class Scanner extends ElementScanner8<HashMap<String, Note>, Map<String, 
 
     private void ifConstructor(ExecutableElement e, Map<String, Note> p) {
     	if (e.getSimpleName().toString().equals("<init>")) {
-    		System.out.println("it's the constur");
-    		Document d =e.getAnnotation(Document.class);
+            System.out.println("it's the constur");
+            Document d =e.getAnnotation(Document.class);
             addDocument(e, p);
     	}
-	}
+    }
 
-	@Override
+    @Override
     public HashMap<String, Note> visitVariable(VariableElement e, Map<String, Note> p) {
     	addDocument(e, p);
         return super.visitVariable(e, p);
@@ -59,7 +59,7 @@ public class Scanner extends ElementScanner8<HashMap<String, Note>, Map<String, 
         String shortKey = e.getAnnotation(Document.class).key();
         String className = e.toString();
         String fullKey =  className + "." + shortKey;
-    	Note note = new Note(fullKey, priority, className);
+    	Note note = new Note(fullKey, priority, className, e.getKind());
         p.put(fullKey, note);
     }
 

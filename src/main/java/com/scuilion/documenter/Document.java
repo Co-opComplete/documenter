@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 @Target({
 ElementType.ANNOTATION_TYPE,
 ElementType.CONSTRUCTOR,
-ElementType.FIELD,
+ElementType.FIELD,   //instance variable
 ElementType.METHOD,
 ElementType.PARAMETER,
 ElementType.PACKAGE,

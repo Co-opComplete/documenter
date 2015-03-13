@@ -11,7 +11,7 @@ public class DefaultWriter implements Writer {
 
     @Override
     public void write(Map<String, Note> documents) {
-        String filename = "documents.json";
+        String filename = "build/documents.json";
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonRepresentation = gson.toJson(documents);
 

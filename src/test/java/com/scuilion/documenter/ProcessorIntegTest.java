@@ -22,17 +22,16 @@ import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.junit.Test;
 
+//runs annotation processor on src/test/resource/projectRoot/main/java
 public class ProcessorIntegTest {
 
     @Test
     public void createCompilerTest() throws IOException {
-
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         if (compiler == null) {
             throw new RuntimeException("No system java compiler available.\n Verify that you are running using the jdk, NOT the jre.");
         }
         Properties props = System.getProperties();
-        props.setProperty("exec.mainClass", "org.jboss.weld.environment.se.StartMain");
 
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
 
@@ -42,6 +41,7 @@ public class ProcessorIntegTest {
         Collection<File> javaFiles = FileUtils.listFiles(dir, new RegexFileFilter(".*\\.java$"), TrueFileFilter.INSTANCE);
 
         Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(javaFiles);
+
         JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, getOptions(), null, compilationUnits);
 
         assertTrue(task.call());
