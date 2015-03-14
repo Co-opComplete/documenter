@@ -39,6 +39,7 @@ public class ProcessorIntegTest {
 
         File dir = getFilesToCompile();
         Collection<File> javaFiles = FileUtils.listFiles(dir, new RegexFileFilter(".*\\.java$"), TrueFileFilter.INSTANCE);
+//        Collection<File> javaFiles = FileUtils.listFiles(dir, new RegexFileFilter("SingleMethod.java$"), TrueFileFilter.INSTANCE);
 
         Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(javaFiles);
 

@@ -9,8 +9,9 @@ import com.scuilion.documenter.Document;
 @Document(key="class", priority=100)
 class ProcessorTestClass{
     
-    int dumb;
-    {
+    static int dumb;
+
+    static {
         dumb = 0;
     }
 

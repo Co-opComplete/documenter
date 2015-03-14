@@ -2,7 +2,8 @@ package com.scuilion.documenter;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasKey;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
 import java.util.Map;
 
@@ -25,6 +26,7 @@ public class TestWriter implements Writer {
     private void validateExecutableElements(Map<String, Note> documents) {
         methodKind(documents);
     }
+
     private void validateTypeElements(Map<String, Note> documents) {
         //javax.lang.model.element.TypeElement
         annotationKind(documents);
@@ -47,66 +49,71 @@ public class TestWriter implements Writer {
     }
 
     private void methodKind(Map<String, Note> documents) {
-        assertThat(documents, hasKey("projectRoot.main.java.com.scuilion.ProcessorTestClass.class.someMethod"));
-        Note note = documents.get("projectRoot.main.java.com.scuilion.ProcessorTestClass.class.someMethod");
-        assertEquals(ElementKind.CLASS, note.getElementKind());
-        assertEquals(400, note.getPriority());
-        
-        assertThat(documents, hasKey("projectRoot.main.java.com.scuilion.ProcessorTestClass.class.anotherMethod"));
-        note = documents.get("projectRoot.main.java.com.scuilion.ProcessorTestClass.class.anotherMethod");
-        assertEquals(ElementKind.CLASS, note.getElementKind());
-        assertEquals(500, note.getPriority());
+        assertThat(documents.size(), is(not(0)));
+        assertThat(documents, hasKey("aSingleMethod().a.single.method"));
+        Note note = documents.get("aSingleMethod().a.single.method");
+        assertThat(note.getElementKind(), is(ElementKind.METHOD)); 
+        assertThat(note.getPriority(), is(111)); 
+
+        assertThat(documents, hasKey("someMethod().some.method"));
+        note = documents.get("someMethod().some.method");
+        assertThat(note.getElementKind(), is(ElementKind.METHOD)); 
+        assertThat(note.getPriority(), is(400)); 
+
+        assertThat(documents, hasKey("anotherMethod().another.method"));
+        note = documents.get("anotherMethod().another.method");
+        assertThat(note.getElementKind(), is(ElementKind.METHOD)); 
+        assertThat(note.getPriority(), is(500)); 
     }
 
     private void exceptionVariableKind(Map<String, Note> documents) {
         assertThat(documents, hasKey("e.exception.variable"));
         Note note = documents.get("e.exception.variable");
-        assertEquals(ElementKind.PARAMETER, note.getElementKind());
-        assertEquals(550, note.getPriority());
+        assertThat(note.getElementKind(), is(ElementKind.PARAMETER)); 
+        assertThat(note.getPriority(), is(550)); 
     }
 
     private void resourceVariableKind(Map<String, Note> documents) {
         assertThat(documents, hasKey("r.resource.variable"));
         Note note = documents.get("r.resource.variable");
-        assertEquals(ElementKind.PARAMETER, note.getElementKind());
-        assertEquals(450, note.getPriority());
+        assertThat(note.getElementKind(), is(ElementKind.PARAMETER)); 
+        assertThat(note.getPriority(), is(450)); 
     }
 
     private void methodParameterKind(Map<String, Note> documents) {
         assertThat(documents, hasKey("with.type.use"));
         Note note = documents.get("with.type.use");
-        assertEquals(ElementKind.PARAMETER, note.getElementKind());
-        assertEquals(700, note.getPriority());
+        assertThat(note.getElementKind(), is(ElementKind.PARAMETER)); 
+        assertThat(note.getPriority(), is(700)); 
     }
 
     private void constructorParameterKind(Map<String, Note> documents) {
         assertThat(documents, hasKey("parm1.constructor.parameter"));
         Note note = documents.get("parm1.constructor.parameter");
-        assertEquals(ElementKind.PARAMETER, note.getElementKind());
-        assertEquals(350, note.getPriority());
+        assertThat(note.getElementKind(), is(ElementKind.PARAMETER)); 
+        assertThat(note.getPriority(), is(350)); 
     }
 
     private void annotationKind(Map<String, Note> documents) {
         assertThat(documents, hasKey("projectRoot.main.java.com.scuilion.GenericAnnotation.annotation.type"));
         Note note = documents.get("projectRoot.main.java.com.scuilion.GenericAnnotation.annotation.type");
-        assertEquals(ElementKind.ANNOTATION_TYPE, note.getElementKind());
-        assertEquals(3000, note.getPriority());
+        assertThat(note.getElementKind(), is(ElementKind.ANNOTATION_TYPE)); 
+        assertThat(note.getPriority(), is(3000)); 
     }
 
     private void packageKind(Map<String, Note> documents) {
         assertThat(documents, hasKey("projectRoot.main.java.com.scuilion.package.info"));
         Note note = documents.get("projectRoot.main.java.com.scuilion.package.info");
-        assertEquals(note.getElementKind(), ElementKind.PACKAGE);
-        assertEquals(2000, note.getPriority());
+        assertThat(note.getElementKind(), is(ElementKind.PACKAGE)); 
+        assertThat(note.getPriority(), is(2000)); 
     }
 
     @Test
     private void enummeratedConstantKind(Map<String, Note> documents) {
         assertThat(documents, hasKey("foo.enum.constant"));
         Note note = documents.get("foo.enum.constant");
-        assertEquals(ElementKind.ENUM_CONSTANT, note.getElementKind());
-        assertEquals(1000, note.getPriority());
-        
+        assertThat(note.getElementKind(), is(ElementKind.ENUM_CONSTANT)); 
+        assertThat(note.getPriority(), is(1000)); 
     }
 
     @Test
@@ -114,15 +121,15 @@ public class TestWriter implements Writer {
         //aka: field, instanceVariable, member variables
         assertThat(documents, hasKey("really.instance.variable"));
         Note note = documents.get("really.instance.variable");
-        assertEquals(ElementKind.FIELD, note.getElementKind());
-        assertEquals(300, note.getPriority());
+        assertThat(note.getElementKind(), is(ElementKind.FIELD)); 
+        assertThat(note.getPriority(), is(300)); 
     }
 
     @Test
     public void enummeratedKind(Map<String, Note> documents){
         assertThat(documents, hasKey("projectRoot.main.java.com.scuilion.Day.enum"));
         Note note = documents.get("projectRoot.main.java.com.scuilion.Day.enum");
-        assertEquals(ElementKind.ENUM, note.getElementKind());
-        assertEquals(1000, note.getPriority());
+        assertThat(note.getElementKind(), is(ElementKind.ENUM)); 
+        assertThat(note.getPriority(), is(1000)); 
     }
 }
