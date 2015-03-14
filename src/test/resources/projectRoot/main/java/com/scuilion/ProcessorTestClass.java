@@ -9,7 +9,11 @@ import com.scuilion.documenter.Document;
 @Document(key="class", priority=100)
 class ProcessorTestClass{
     
-    
+    int dumb;
+    {
+        dumb = 0;
+    }
+
     @Document(key="constructor", priority=200)
     public ProcessorTestClass(@Document(key="constructor.parameter", priority=350)int parm1){
     }
@@ -17,7 +21,7 @@ class ProcessorTestClass{
     @Document(key="instance.variable", priority=300)
     String really = "foo";
     
-    @Document(key="somemethod", priority=400) 
+    @Document(key="some.method", priority=400) 
     public Integer someMethod(){
 
         @Document(key="local.variable.one", priority=-1)
