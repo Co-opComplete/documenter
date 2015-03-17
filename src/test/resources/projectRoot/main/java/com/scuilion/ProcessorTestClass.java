@@ -15,7 +15,7 @@ class ProcessorTestClass{
     }
 
     @Document(key="this.constructor", priority=200)
-    public ProcessorTestClass(@Document(key="constructor.parameter", priority=350)int parm1){
+    public ProcessorTestClass(@Document(key="constructor.parameter", priority=350)int param1){
     }
 
     @Document(key="instance.variable", priority=300)

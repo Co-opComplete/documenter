@@ -64,14 +64,22 @@ public class Scanner extends ElementScanner8<HashMap<String, Note>, Map<String, 
             int priority = document.priority();
             keysCannontHaveSpaces(document.key());
             String shortKey = document.key();
-            String elementName = e.getSimpleName().toString();
+            String elementName = getElementName(e);
 
-                String className = getClassName(e);
-            String fullKey = className + "." + elementName + "." + shortKey;
+            String className = getClassName(e);
+            String fullKey = className + elementName + "." + shortKey;
             Note note = new Note.NoteBuilder().key(fullKey).priority(priority)
                     .className(className).elementKind(e.getKind()).build();
             p.put(fullKey, note);
         }
+    }
+
+    private String getElementName(Element e) {
+        String elementName ="";
+        if(!e.getKind().equals(ElementKind.PACKAGE)){
+            elementName = "." + e.getSimpleName().toString();
+        }
+        return elementName;
     }
 
     protected void addDocument(Element e, Map<String, Note> p, String extendedName) {
@@ -79,26 +87,8 @@ public class Scanner extends ElementScanner8<HashMap<String, Note>, Map<String, 
         addDocument(document, e, p);
     }
 
-//    protected void addDocument(Element e, Map<String, Note> p, String extendedName) {
-//        if (!extendedName.equals("")) {
-//            extendedName = "." + extendedName;
-//        }
-//        Document document = e.getAnnotation(Document.class);
-//        if (document != null) {
-//            int priority = document.priority();
-//            keysCannontHaveSpaces(document.key());
-//            String shortKey = document.key();
-//            String elementName = e.getSimpleName().toString();
-//            String className = getClassName(e);
-//            String fullKey = className + "___" + elementName + "." + shortKey + "____" + extendedName;
-//            Note note = new Note.NoteBuilder().key(fullKey).priority(priority)
-//                    .className(className).elementKind(e.getKind()).build();
-//            p.put(fullKey, note);
-//        }
-//    }
-
     private String getClassName(Element e) {
-        String className = "";
+
         Element localElement = e;
         while(!localElement.getKind().equals(ElementKind.CLASS) 
                 && !localElement.getKind().equals(ElementKind.ENUM)

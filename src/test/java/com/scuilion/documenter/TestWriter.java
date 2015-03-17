@@ -16,9 +16,15 @@ public class TestWriter implements Writer {
 
     @Override
     public void write(Map<String, Note> documents) {
-//        validateVariableElements(documents);
-//        validatePackageElements(documents);
-//        validateTypeElements(documents);
+        System.out.println("xxxx");
+        for(String s : documents.keySet()){
+            System.out.println(s);
+        }
+        System.out.println("xxxx");
+
+        validateVariableElements(documents);
+        validatePackageElements(documents);
+        validateTypeElements(documents);
         validateExecutableElements(documents);
         
         //allPrioritiesCovered(documents);
@@ -79,12 +85,7 @@ public class TestWriter implements Writer {
 
     private void methodKind(Map<String, Note> documents) {
         assertThat(documents.size(), is(not(0)));
-        System.out.println("xxxx");
-        for(String s : documents.keySet()){
-            System.out.println(s);
-        }
-        System.out.println("xxxx");
-
+        
         String key = "projectRoot.main.java.com.scuilion.SingleMethod.aSingleMethod.a.single.method";
         assertThat(documents, hasKey(key));
         Note note = documents.get(key);
@@ -122,57 +123,64 @@ public class TestWriter implements Writer {
     }
 
     private void methodParameterKind(Map<String, Note> documents) {
-        assertThat(documents, hasKey("with.type.use"));
-        Note note = documents.get("with.type.use");
+        String key = "projectRoot.main.java.com.scuilion.ProcessorTestClass.with.type.use";
+        Note note = documents.get(key);
+        assertThat(note.getClassName(), is("projectRoot.main.java.com.scuilion.ProcessorTestClass")); 
         assertThat(note.getElementKind(), is(ElementKind.PARAMETER)); 
         assertThat(note.getPriority(), is(700)); 
     }
 
     private void constructorParameterKind(Map<String, Note> documents) {
-        assertThat(documents, hasKey("parm1.constructor.parameter"));
-        Note note = documents.get("parm1.constructor.parameter");
+        String key = "projectRoot.main.java.com.scuilion.ProcessorTestClass.param1.constructor.parameter";
+        assertThat(documents, hasKey(key));
+        Note note = documents.get(key);
+        assertThat(note.getClassName(), is("projectRoot.main.java.com.scuilion.ProcessorTestClass")); 
         assertThat(note.getElementKind(), is(ElementKind.PARAMETER)); 
         assertThat(note.getPriority(), is(350)); 
     }
 
     private void annotationKind(Map<String, Note> documents) {
-        assertThat(documents, hasKey("projectRoot.main.java.com.scuilion.GenericAnnotation.annotation.type"));
-        Note note = documents.get("projectRoot.main.java.com.scuilion.GenericAnnotation.annotation.type");
+        String key = "projectRoot.main.java.com.scuilion.GenericAnnotation.GenericAnnotation.annotation.type";
+        assertThat(documents, hasKey(key));
+        Note note = documents.get(key);
+        assertThat(note.getClassName(), is("projectRoot.main.java.com.scuilion.GenericAnnotation")); 
         assertThat(note.getElementKind(), is(ElementKind.ANNOTATION_TYPE)); 
         assertThat(note.getPriority(), is(3000)); 
     }
 
     private void packageKind(Map<String, Note> documents) {
-        assertThat(documents, hasKey("projectRoot.main.java.com.scuilion.package.info"));
-        Note note = documents.get("projectRoot.main.java.com.scuilion.package.info");
+        String key = "projectRoot.main.java.com.scuilion.package.info";
+        assertThat(documents, hasKey(key));
+        Note note = documents.get(key);
+        //assertThat(note.getClassName(), is("")); 
         assertThat(note.getElementKind(), is(ElementKind.PACKAGE)); 
         assertThat(note.getPriority(), is(2000)); 
     }
 
-    @Test
     private void enummeratedConstantKind(Map<String, Note> documents) {
+        String key = "projectRoot.main.java.com.scuilion.package.info";
         assertThat(documents, hasKey("foo.enum.constant"));
         Note note = documents.get("foo.enum.constant");
         assertThat(note.getElementKind(), is(ElementKind.ENUM_CONSTANT)); 
         assertThat(note.getPriority(), is(1000)); 
     }
 
-    @Test
     private void instanceVariableKind(Map<String, Note> documents) {
         //aka: field, instanceVariable, member variables
-        for(String s : documents.keySet()) {
-            System.out.println(s);
-        }
-        assertThat(documents, hasKey("really.instance.variable"));
-        Note note = documents.get("really.instance.variable");
+        String key = "projectRoot.main.java.com.scuilion.ProcessorTestClass.really.instance.variable";
+        assertThat(documents, hasKey(key));
+        Note note = documents.get(key);
+        assertThat(note.getClassName(), is("projectRoot.main.java.com.scuilion.ProcessorTestClass")); 
         assertThat(note.getElementKind(), is(ElementKind.FIELD)); 
         assertThat(note.getPriority(), is(300)); 
     }
 
     @Test
     public void enummeratedKind(Map<String, Note> documents){
-        assertThat(documents, hasKey("projectRoot.main.java.com.scuilion.Day.enum"));
-        Note note = documents.get("projectRoot.main.java.com.scuilion.Day.enum");
+        String key = "projectRoot.main.java.com.scuilion.Day.Day.enum";
+        assertThat(documents, hasKey(key));
+        Note note = documents.get(key);
+        assertThat(note.getClassName(), is("projectRoot.main.java.com.scuilion.Day")); 
         assertThat(note.getElementKind(), is(ElementKind.ENUM)); 
         assertThat(note.getPriority(), is(1000)); 
     }
