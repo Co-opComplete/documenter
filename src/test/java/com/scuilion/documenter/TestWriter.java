@@ -1,26 +1,55 @@
 package com.scuilion.documenter;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasKey;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.MatcherAssert.*;
+//import static org.hamcrest.core.IsEqual.*;
+import static org.hamcrest.Matchers.*;
 
-import java.util.Map;
+import java.util.*;
 
-import javax.enterprise.inject.Alternative;
-import javax.lang.model.element.ElementKind;
+import javax.enterprise.inject.*;
+import javax.lang.model.element.*;
 
-import org.junit.Test;
+import org.junit.*;
 
 @Alternative 
 public class TestWriter implements Writer {
 
     @Override
     public void write(Map<String, Note> documents) {
-        validateVariableElements(documents);
-        validatePackageElements(documents);
-        validateTypeElements(documents);
+//        validateVariableElements(documents);
+//        validatePackageElements(documents);
+//        validateTypeElements(documents);
         validateExecutableElements(documents);
+        
+        //allPrioritiesCovered(documents);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void allPrioritiesCovered(Map<String, Note> documents) {
+        List<Integer> expectedPriorities = new ArrayList<>();
+        expectedPriorities.add(1000);
+        expectedPriorities.add(2000);
+        expectedPriorities.add(3000);
+
+        expectedPriorities.add(100);
+        expectedPriorities.add(111);
+        expectedPriorities.add(200);
+        expectedPriorities.add(300);
+        expectedPriorities.add(400);
+        expectedPriorities.add(500);
+        expectedPriorities.add(700);
+        expectedPriorities.add(800);
+        expectedPriorities.add(350);
+        expectedPriorities.add(450);
+        expectedPriorities.add(550);
+        expectedPriorities.add(550);
+
+
+        List<Integer> actualPriorities = new ArrayList<>();
+        for(Note note: documents.values()) {
+            actualPriorities.add(note.getPriority());
+        }
+        assertThat(expectedPriorities, containsInAnyOrder(actualPriorities));
     }
 
     private void validateExecutableElements(Map<String, Note> documents) {
@@ -50,18 +79,30 @@ public class TestWriter implements Writer {
 
     private void methodKind(Map<String, Note> documents) {
         assertThat(documents.size(), is(not(0)));
-        assertThat(documents, hasKey("aSingleMethod().a.single.method"));
-        Note note = documents.get("aSingleMethod().a.single.method");
+        System.out.println("xxxx");
+        for(String s : documents.keySet()){
+            System.out.println(s);
+        }
+        System.out.println("xxxx");
+
+        String key = "projectRoot.main.java.com.scuilion.SingleMethod.aSingleMethod.a.single.method";
+        assertThat(documents, hasKey(key));
+        Note note = documents.get(key);
+        assertThat(note.getClassName(), is("projectRoot.main.java.com.scuilion.SingleMethod")); 
         assertThat(note.getElementKind(), is(ElementKind.METHOD)); 
         assertThat(note.getPriority(), is(111)); 
 
-        assertThat(documents, hasKey("someMethod().some.method"));
-        note = documents.get("someMethod().some.method");
+        key = "projectRoot.main.java.com.scuilion.ProcessorTestClass.someMethod.some.method";
+        assertThat(documents, hasKey(key));
+        note = documents.get(key);
+        assertThat(note.getClassName(), is("projectRoot.main.java.com.scuilion.ProcessorTestClass")); 
         assertThat(note.getElementKind(), is(ElementKind.METHOD)); 
         assertThat(note.getPriority(), is(400)); 
 
-        assertThat(documents, hasKey("anotherMethod().another.method"));
-        note = documents.get("anotherMethod().another.method");
+        key = "projectRoot.main.java.com.scuilion.ProcessorTestClass.anotherMethod.another.method";
+        assertThat(documents, hasKey(key));
+        note = documents.get(key);
+        assertThat(note.getClassName(), is("projectRoot.main.java.com.scuilion.ProcessorTestClass")); 
         assertThat(note.getElementKind(), is(ElementKind.METHOD)); 
         assertThat(note.getPriority(), is(500)); 
     }
@@ -119,6 +160,9 @@ public class TestWriter implements Writer {
     @Test
     private void instanceVariableKind(Map<String, Note> documents) {
         //aka: field, instanceVariable, member variables
+        for(String s : documents.keySet()) {
+            System.out.println(s);
+        }
         assertThat(documents, hasKey("really.instance.variable"));
         Note note = documents.get("really.instance.variable");
         assertThat(note.getElementKind(), is(ElementKind.FIELD)); 

@@ -1,12 +1,11 @@
 package projectRoot.main.java.com.scuilion;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-import com.scuilion.documenter.Document;
+import com.scuilion.documenter.*;
 
-@Document(key="class", priority=100)
+@Document(key="class.decleration", priority=100)
 class ProcessorTestClass{
     
     static int dumb;
@@ -15,7 +14,7 @@ class ProcessorTestClass{
         dumb = 0;
     }
 
-    @Document(key="constructor", priority=200)
+    @Document(key="this.constructor", priority=200)
     public ProcessorTestClass(@Document(key="constructor.parameter", priority=350)int parm1){
     }
 
@@ -36,17 +35,15 @@ class ProcessorTestClass{
 
     @Document(key="another.method", priority=500) 
     public float anotherMethod(){
-        try (@Document(key="resource.variable", priority=450)PhonyResource r = new PhonyResource()) {
+        try (@Document(key="resource.variable", priority=-3)PhonyResource r = new PhonyResource()) {
 
-        } catch (@Document(key="exception.variable", priority=550)IOException e) {
-            // TODO Auto-generated catch block
+        } catch (@Document(key="exception.variable", priority=-4)IOException e) {
             e.printStackTrace();
         }
 		return 0.0f;
     }
     
-    public List<@Document(key="type.parameter", priority=800)String>
-        withParameter(@Document(key="type.use", priority=700)boolean with) {
+    public List<@Document(key="type.parameter", priority=800)String> withParameter(@Document(key="type.use", priority=700)boolean with) {
         return new ArrayList<>();
     }
 

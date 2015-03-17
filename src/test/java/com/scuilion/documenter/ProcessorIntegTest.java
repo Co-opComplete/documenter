@@ -1,26 +1,16 @@
 package com.scuilion.documenter;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
 
-import javax.tools.DiagnosticCollector;
-import javax.tools.JavaCompiler;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
+import javax.tools.*;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.RegexFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.junit.Test;
+import org.apache.commons.io.*;
+import org.apache.commons.io.filefilter.*;
+import org.junit.*;
 
 //runs annotation processor on src/test/resource/projectRoot/main/java
 public class ProcessorIntegTest {
@@ -31,8 +21,6 @@ public class ProcessorIntegTest {
         if (compiler == null) {
             throw new RuntimeException("No system java compiler available.\n Verify that you are running using the jdk, NOT the jre.");
         }
-        Properties props = System.getProperties();
-
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
 
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);

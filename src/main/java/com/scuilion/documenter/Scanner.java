@@ -1,22 +1,10 @@
 package com.scuilion.documenter;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*;
+import java.util.regex.*;
 
-import javax.lang.model.element.AnnotationMirror;
-import javax.lang.model.element.AnnotationValue;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.PackageElement;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.TypeParameterElement;
-import javax.lang.model.element.VariableElement;
-import javax.lang.model.util.ElementScanner8;
+import javax.lang.model.element.*;
+import javax.lang.model.util.*;
 
 public class Scanner extends ElementScanner8<HashMap<String, Note>, Map<String, Note>> {
     @Override
@@ -36,18 +24,22 @@ public class Scanner extends ElementScanner8<HashMap<String, Note>, Map<String, 
         addDocument(e, p);
         return super.visitType(e, p);
     }
+    @Override
+    public HashMap<String, Note> visitUnknown(Element e, Map<String, Note> p) {
+        addDocument(e, p);
+        return super.visitUnknown(e, p);
+    }
 
     @Override
     public HashMap<String, Note> visitExecutable(ExecutableElement e, Map<String, Note> p) {
-        System.out.print("here ");
-        System.out.println(e.getSimpleName());
-        if (!e.getSimpleName().contentEquals("<init>") && e.getKind().equals(ElementKind.METHOD)) {
-            addDocument(e.getEnclosingElement(), p, e.getSimpleName().toString());
-        }
-        List<? extends AnnotationMirror> annotationMirrors = e.getAnnotationMirrors();
         Document[] docs = e.getAnnotationsByType(com.scuilion.documenter.Document.class);
-
         addDocument(docs, e, p); 
+        
+        if(e.getKind().equals(ElementKind.METHOD)){
+            for(Element parameterElement : e.getParameters()){
+                addDocument(parameterElement, p); 
+            }
+        }
 
         return super.visitExecutable(e, p);
     }
@@ -64,33 +56,57 @@ public class Scanner extends ElementScanner8<HashMap<String, Note>, Map<String, 
 
     protected void addDocument(Document[] documents, Element e, Map<String, Note> p) {
         for (int i = 0; i < documents.length; i++) {
-            Document document = documents[i];
-            if (document != null) {
-                int priority = document.priority();
-                keysCannontHaveSpaces(document.key());
-                String shortKey = document.key();
-                String className = e.toString();
-                String fullKey = className + "." + shortKey;
-                Note note = new Note(fullKey, priority, className, e.getKind());
-                p.put(fullKey, note);
-            }
+            addDocument(documents[i], e, p);
         }
     }
-
-    protected void addDocument(Element e, Map<String, Note> p, String extendedName) {
-        if (!extendedName.equals("")) {
-            extendedName = "." + extendedName;
-        }
-        Document document = e.getAnnotation(Document.class);
+    protected void addDocument(Document document, Element e, Map<String, Note> p) {
         if (document != null) {
             int priority = document.priority();
             keysCannontHaveSpaces(document.key());
             String shortKey = document.key();
-            String className = e.toString();
-            String fullKey = className + "." + shortKey + extendedName;
-            Note note = new Note(fullKey, priority, className, e.getKind());
+            String elementName = e.getSimpleName().toString();
+
+                String className = getClassName(e);
+            String fullKey = className + "." + elementName + "." + shortKey;
+            Note note = new Note.NoteBuilder().key(fullKey).priority(priority)
+                    .className(className).elementKind(e.getKind()).build();
             p.put(fullKey, note);
         }
+    }
+
+    protected void addDocument(Element e, Map<String, Note> p, String extendedName) {
+        Document document = e.getAnnotation(Document.class);
+        addDocument(document, e, p);
+    }
+
+//    protected void addDocument(Element e, Map<String, Note> p, String extendedName) {
+//        if (!extendedName.equals("")) {
+//            extendedName = "." + extendedName;
+//        }
+//        Document document = e.getAnnotation(Document.class);
+//        if (document != null) {
+//            int priority = document.priority();
+//            keysCannontHaveSpaces(document.key());
+//            String shortKey = document.key();
+//            String elementName = e.getSimpleName().toString();
+//            String className = getClassName(e);
+//            String fullKey = className + "___" + elementName + "." + shortKey + "____" + extendedName;
+//            Note note = new Note.NoteBuilder().key(fullKey).priority(priority)
+//                    .className(className).elementKind(e.getKind()).build();
+//            p.put(fullKey, note);
+//        }
+//    }
+
+    private String getClassName(Element e) {
+        String className = "";
+        Element localElement = e;
+        while(!localElement.getKind().equals(ElementKind.CLASS) 
+                && !localElement.getKind().equals(ElementKind.ENUM)
+                && !localElement.getKind().equals(ElementKind.PACKAGE)
+                && !localElement.getKind().equals(ElementKind.ANNOTATION_TYPE)){
+            localElement = localElement.getEnclosingElement();
+        }
+        return localElement.toString();
     }
 
     private void keysCannontHaveSpaces(String key) {

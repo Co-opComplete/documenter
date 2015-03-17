@@ -1,19 +1,13 @@
 package com.scuilion.documenter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.*;
+import org.junit.rules.*;
 
 public class CreatingPropertyFiles {
 
@@ -53,9 +47,9 @@ public class CreatingPropertyFiles {
 
 	private List<Note> createNotes() {
 		List<Note> notes = new ArrayList<>();
-		notes.add(new Note("first", 10, "class1"));
-		notes.add(new Note("second", 20, "class1"));
-		notes.add(new Note("third", 30, "class1"));
+        notes.add(new Note.NoteBuilder().key("first").priority(10).className( "class1").build());
+        notes.add(new Note.NoteBuilder().key("second").priority(20).className( "class1").build());
+        notes.add(new Note.NoteBuilder().key("third").priority(30).className( "class1").build());
 		return notes;
 	}
 

@@ -6,5 +6,4 @@
     <alternatives>
          <class>com.scuilion.documenter.TestWriter</class>
     </alternatives>
-
 </beans>

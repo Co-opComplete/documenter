@@ -34,14 +34,6 @@ publishing {
     }
 }
 
-configurations {
-    integrationTestCompile.extendsFrom testCompile
-    integrationTestRuntime.extendsFrom testRuntime
-
-    integrationTestCompile.extendsFrom compile
-    integrationTestRuntime.extendsFrom runtime
-}
-
 dependencies{
     compile 'commons-io:commons-io:2.4'
     compile 'javassist:javassist:3.12.1.GA'
