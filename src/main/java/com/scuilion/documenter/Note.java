@@ -1,27 +1,55 @@
 package com.scuilion.documenter;
 
-import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.*;
 
 //TODO: convert to builder pattern
 public class Note {
 	private String key;
 	private int priority;
 	private String className;
+	private String packageName;
 	private ElementKind elementKind;
 
-	public Note(String key, int priority, String className) {
-		super();
-		this.key = key;
-		this.priority = priority;
-		this.className = className;
+	public static class NoteBuilder{
+        private String key;
+        private int priority;
+        private String className;
+        private String packageName;
+        private ElementKind elementKind;
+        public NoteBuilder(){
+        }
+        public NoteBuilder key(String key) {
+            this.key = key;
+            return this;
+        }
+        public NoteBuilder priority(int priority) {
+            this.priority = priority;
+            return this;
+        }
+        public NoteBuilder className(String className) {
+            this.className = className;
+            return this;
+        }
+        public NoteBuilder packageName(String packageName) {
+            this.packageName = packageName;
+            return this;
+        }
+        public NoteBuilder elementKind(ElementKind elementKind) {
+            this.elementKind = elementKind;
+            return this;
+        }
+        public Note build(){
+            return new Note(this.key, this.priority, this.className, this.elementKind,
+                    this.packageName);
+        }
 	}
 
-	public Note(String key, int priority, String className, ElementKind elementKind) {
-		super();
+	private Note(String key, int priority, String className, ElementKind elementKind, String packageName) {
 		this.key = key;
 		this.priority = priority;
 		this.className = className;
 		this.elementKind = elementKind;
+		this.packageName = packageName;
 	}
 
 	public String getKey() {
@@ -53,6 +81,14 @@ public class Note {
 
     public void setElementKind(ElementKind elementKind) {
         this.elementKind = elementKind;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
 }
