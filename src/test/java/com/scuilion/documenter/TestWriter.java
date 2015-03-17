@@ -9,8 +9,6 @@ import java.util.*;
 import javax.enterprise.inject.*;
 import javax.lang.model.element.*;
 
-import org.junit.*;
-
 @Alternative 
 public class TestWriter implements Writer {
 
@@ -175,7 +173,6 @@ public class TestWriter implements Writer {
         assertThat(note.getPriority(), is(300)); 
     }
 
-    @Test
     public void enummeratedKind(Map<String, Note> documents){
         String key = "projectRoot.main.java.com.scuilion.Day.Day.enum";
         assertThat(documents, hasKey(key));
