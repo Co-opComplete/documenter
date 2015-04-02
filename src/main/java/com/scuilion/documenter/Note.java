@@ -2,7 +2,6 @@ package com.scuilion.documenter;
 
 import javax.lang.model.element.*;
 
-//TODO: convert to builder pattern
 public class Note {
 	private String key;
 	private int priority;
