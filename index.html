@@ -6,7 +6,7 @@
 
         <title>@Annotations and Annotation Processing</title>
 
-        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="description" content="Creating annotations.">
         <meta name="author" content="Kevin O'Neal">
 
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -16,6 +16,9 @@
 
         <link rel="stylesheet" href="css/reveal.css">
         <link rel="stylesheet" href="css/theme/serif.css" id="theme">
+
+        <!-- built using reveal.js-->
+        <!-- code blocks by hightlight.js-->
 
         <!-- Code syntax highlighting -->
         <link rel="stylesheet" href="lib/css/zenburn.css">
@@ -64,20 +67,6 @@ public void method() {
 }</pre></code>
                 </section>
                 <section>
-                    <h1>@Foo</h1>
-                </section>
-                <section>
-                    <pre><code data-trim contenteditable>
-public @interface Foo{
-}</pre></code>
-                </section>
-
-                <section>
-                    <h1>@Ignore</h1>
-                    org.junit.Ignore
-                </section>
-
-                <section>
                    <pre><code data-trim contenteditable>
 @Ignore
 @Test
@@ -97,6 +86,16 @@ public void method() {
                     </pre></code>
                 </section>
 
+
+                <section>
+                    <h1>@Foo</h1>
+                </section>
+                <section>
+                    <pre><code data-trim contenteditable>
+public @interface Foo{
+}</pre></code>
+                </section>
+
                 <section>
                     <h3>@Foo(aNumber=12)</h3>
                 </section>
@@ -110,7 +109,7 @@ public @interface Foo{
                 </section>
 
                 <section>
-                    <h3>@Foo(aNumber=12, aString="a String")</h3>
+                    <h4>@Foo(aNumber=12, aString="a String")</h4>
                 </section>
 
                 <section>
@@ -137,20 +136,26 @@ public @interface Foo{
 
                 <section>
                     <h3>java.lang.annotation.ElementType</h3>
-                    ANNOTATION_TYPE
-                    CONSTRUCTOR
-                    FIELD
-                    METHOD
-                    PARAMETER
-                    PACKAGE
-                    TYPE
-                    LOCAL_VARIABLE
-                    TYPE_PARAMETER
-                    TYPE_USE 
+                    ANNOTATION_TYPE</br>
+                    CONSTRUCTOR</br>
+                    FIELD</br>
+                    METHOD</br>
+                    PARAMETER</br>
+                    PACKAGE</br>
+                    TYPE</br>
+                    LOCAL_VARIABLE</br>
+                    TYPE_PARAMETER</br>
+                    TYPE_USE</br>
                 </section>
 
                 <section>
                     <pre><code data-trim contenteditable>
+//@Document()
+package com.scuilion.documenter;
+
+//@Document()
+import org.junit.Test;
+
 @Document()
 class ProcessorTestClass{
 
@@ -188,8 +193,58 @@ class ProcessorTestClass{
                 </section>
 
                 <section>
+<pre>package-info.java<code>@Document(key="package.info", priority=2000)
+package projectRoot.main.java.com.scuilion;
+
+import com.scuilion.documenter.Document;
+</pre></code>
                 </section>
- 
+
+
+                <section>
+                    <h1>@Retention</h1>
+                    java.lang.annotation.Retention
+                </section>
+
+                <section>
+                    <h3>java.lang.annotation.RetentionPolicy</h3>
+                    SOURCE</br>
+                    CLASS</br>
+                    RUNTIME</br>
+                </section>
+
+
+                <section>
+                <div>
+                <h3>java.util.ServiceLoader&lt;S&gt;</h3>
+                provider-configuration
+<pre>META-INF/services/javax.annotation.processing.Processor
+<code class="nohighlight">com.scuilion.documenter.AnnotationProcessor
+</pre></code></div>
+                </section>
+
+                <section>
+<pre><code class="java">private ServiceLoader&lt;Documenter&gt; loader;
+
+private DocumeterService() {
+    loader = ServiceLoader.load(Documenter.class);
+    Iterator<Documenter> documenters = loader.iterator();
+    while(documenters.hasNext()) {
+        Documenter d = documenters.next();
+    }
+} 
+</pre></code>
+            </section>
+
+            <section>
+<pre><code>@SupportedAnnotationTypes({ "com.scuilion.documenter.Document" })
+public class AnnotationProcessor extends AbstractProcessor {
+    @Override
+    public boolean process(Set&lt;? extends TypeElement&gt; annotations, RoundEnvironment roundEnv) {
+    }
+}
+</pre></code>
+            </section>
             </div>
         </div>
         <script src="lib/js/head.min.js"></script>
