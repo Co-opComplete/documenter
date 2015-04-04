@@ -31,7 +31,11 @@
                 link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
                 document.getElementsByTagName( 'head' )[0].appendChild( link );
         </script>
-
+        <script> 
+            $(function(){
+              $("#includedContent").load("sections/documents.html"); 
+            });
+    </script> 
         <!--[if lt IE 9]>
         <script src="lib/js/html5shiv.js"></script>
         <![endif]-->
@@ -217,7 +221,6 @@ import com.scuilion.documenter.Document;
                 <section>
                 <div>
                 <h3>java.util.ServiceLoader&lt;S&gt;</h3>
-                provider-configuration
 <pre>META-INF/services/javax.annotation.processing.Processor
 <code class="nohighlight">com.scuilion.documenter.AnnotationProcessor
 </pre></code></div>
@@ -234,9 +237,10 @@ private DocumeterService() {
     }
 } 
 </pre></code>
-            </section>
+                </section>
 
-            <section>
+                <section id="fragments" >
+javax.annotation.processing.AbstractProcessor
 <pre><code>@SupportedAnnotationTypes({ "com.scuilion.documenter.Document" })
 public class AnnotationProcessor extends AbstractProcessor {
     @Override
@@ -244,7 +248,44 @@ public class AnnotationProcessor extends AbstractProcessor {
     }
 }
 </pre></code>
-            </section>
+<p class="fragment">Round processing</p>
+<p class="fragment">Mirror Type</p>
+<p class="fragment">Visitor Pattern</p>
+                </section>
+
+                <section>
+                <h3>@Documenter(key="", priority=0)</h3>
+<pre>documnet.json<code>{
+  "projectRoot.main.java.com.scuilion.Day.Day.enum": {
+    "key": "projectRoot.main.java.com.scuilion.Day.Day.enum",
+    "priority": 1000,
+    "className": "projectRoot.main.java.com.scuilion.Day",
+    "elementKind": "ENUM"
+  },
+  "projectRoot.main.java.com.scuilion.package.info": {
+    "key": "projectRoot.main.java.com.scuilion.package.info",
+    "priority": 2000,
+    "className": "projectRoot.main.java.com.scuilion",
+    "elementKind": "PACKAGE"
+  },
+  "projectRoot.main.java.com.scuilion.SingleMethod.something.parameter.of.a.single.method": {
+    "key": "projectRoot.main.java.com.scuilion.SingleMethod.something.parameter.of.a.single.method",
+    "priority": 222,
+    "className": "projectRoot.main.java.com.scuilion.SingleMethod",
+    "elementKind": "PARAMETER"
+  }...
+</pre></code>
+                </section>
+
+                <section>
+<pre><code>public void processChange(Boolean set){
+    assert set != null;
+}</pre></code>
+<pre><code>public void processChange(@NonNull Boolean set){}</pre></code>
+                </section>
+                <section>
+                    <img src="img/unnamed.png"/> 
+                </section>
             </div>
         </div>
         <script src="lib/js/head.min.js"></script>
