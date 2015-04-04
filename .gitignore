@@ -5,3 +5,4 @@ build*/
 gradlew*
 bin/
 /build-eclipse/
+node_modules/
