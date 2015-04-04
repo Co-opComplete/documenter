@@ -286,6 +286,27 @@ public class AnnotationProcessor extends AbstractProcessor {
                 <section>
                     <img src="img/unnamed.png"/> 
                 </section>
+
+                <section>
+<pre><code>@SupportedAnnotationTypes({ "org.junit.Ignore" })
+public class JunitProcessor extends AbstractProcessor {
+    @Override
+    public boolean process(Set&lt;? extends TypeElement&gt; annotations, RoundEnvironment roundEnv) {
+        System.out.println("junit processor");
+        if (!roundEnv.processingOver()) {
+            for(Element e : roundEnv.getElementsAnnotatedWith(org.junit.Ignore.class)){
+                Ignore ignore = e.getAnnotation(Ignore.class);
+                if(ignore.value().equals("")){
+                    throw new RuntimeException();
+                }
+            }
+        }
+        return true;
+    }
+}
+</pre></code>
+                </section>
+
             </div>
         </div>
         <script src="lib/js/head.min.js"></script>
