@@ -1,15 +1,9 @@
-buildscript {
-    repositories {
-        mavenLocal()
-        jcenter()
-    }
-    dependencies {
-        classpath group: 'com.scuilion.gradle', name: 'utils', version: '0.+'
-    }
+plugins {
+    id "org.gradle.java"
+    id "com.scuilion.syntastic" version "0.3.6"
 }
 
 apply plugin: 'maven-publish'
-apply plugin: 'java'
 apply plugin: 'eclipse'
 
 eclipse {
@@ -49,7 +43,7 @@ dependencies{
     testCompile 'org.powermock:powermock-module-junit4:1.6.1'
     testCompile 'org.powermock:powermock-api-mockito:1.6.1'
 
-    testRuntime files("${System.properties['java.home']}/../lib/tools.jar") 
+    testRuntime files("${System.properties['java.home']}/../lib/tools.jar")
 }
 
 test.doFirst {
@@ -62,6 +56,3 @@ test.doFirst {
         into 'build/classes/test/META-INF/'
     }
 }
-
-apply plugin: 'utils'
-
